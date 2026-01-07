@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thief or My Family - Game Penjaga Rumah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f1f5f9;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUND STATIS */
+        .static-house-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(to bottom, #1e3a8a, #3b82f6, #60a5fa);
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .house-silhouette {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: linear-gradient(45deg, #92400e, #b45309);
+            clip-path: polygon(0% 100%, 20% 40%, 40% 60%, 60% 30%, 80% 50%, 100% 100%);
+            opacity: 0.8;
+        }
+
+        .window-light {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background: #fbbf24;
+            border-radius: 5px;
+            box-shadow: 0 0 30px #fbbf24;
+        }
+
+        .window-1 { top: 100px; left: 45%; }
+        .window-2 { top: 150px; left: 55%; }
+
+        /* NAME INPUT MODAL */
+        .name-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .name-content {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 50px;
+            border-radius: 20px;
+            border: 4px solid #f59e0b;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .name-title {
+            color: #fbbf24;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .name-input-container {
+            margin: 30px 0;
+        }
+
+        .name-label {
+            display: block;
+            color: #60a5fa;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.3em;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid #3b82f6;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .name-input:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .name-hint {
+            color: #94a3b8;
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .start-story-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .start-story-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.5);
+        }
+
+        .start-story-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* STORY MODAL */
+        .story-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .story-content {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 40px;
+            border-radius: 20px;
+            border: 4px solid #f59e0b;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .story-title {
+            color: #fbbf24;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .story-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #cbd5e1;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .story-text strong {
+            color: #f59e0b;
+        }
+
+        .news-banner {
+            background: rgba(239, 68, 68, 0.2);
+            border-left: 5px solid #ef4444;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+
+        .news-title {
+            color: #ef4444;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .start-game-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 30px auto 0;
+            display: block;
+        }
+
+        .start-game-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 50px rgba(16, 185, 129, 0.5);
+        }
+
+        /* MAIN CONTAINER SCROLLABLE */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            padding-top: 230px; /* Ditambah untuk header statis */
+            min-height: 100vh;
+            display: none;
+        }
+
+        /* HEADER STATIS TANPA ANIMASI */
+        .static-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 15px;
+            z-index: 1000;
+            border-bottom: 3px solid #ef4444;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .game-title {
+            text-align: center;
+            font-size: 2em;
+            color: #fbbf24;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 5px;
+        }
+
+        .game-subtitle {
+            text-align: center;
+            color: #60a5fa;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .player-name-display {
+            text-align: center;
+            color: #f59e0b;
+            font-weight: bold;
+            margin-top: 5px;
+            font-size: 1em;
+        }
+
+        /* STATS BAR STATIS */
+        .static-stats {
+            position: fixed;
+            top: 110px;
+            left: 0;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.95);
+            padding: 10px;
+            z-index: 999;
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            border-bottom: 2px solid #475569;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 8px;
+            border: 1px solid #334155;
+            /* HAPUS SEMUA ANIMASI DAN TRANSISI */
+            transition: none !important;
+        }
+
+        .stat-card:hover {
+            /* TIDAK ADA PERUBAHAN SAAT HOVER */
+            border-color: #334155;
+            transform: none;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #10b981;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.8em;
+            margin-top: 3px;
+        }
+
+        /* TIME DISPLAY STATIS */
+        .static-time {
+            position: fixed;
+            top: 165px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #3b82f6;
+            color: #60a5fa;
+            font-weight: bold;
+            z-index: 998;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: none;
+            font-size: 0.9em;
+        }
+
+        /* MAIN CONTENT - SCROLLABLE */
+        .scrollable-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* CHARACTER INSPECTION SECTION */
+        .character-section {
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #3b82f6;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            color: #fbbf24;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid #3b82f6;
+            padding-bottom: 8px;
+        }
+
+        .warning-note {
+            text-align: center;
+            color: #ef4444;
+            font-weight: bold;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ef4444;
+            font-size: 0.9em;
+        }
+
+        .character-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .character-visual {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+        }
+
+        .character-at-door {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            position: relative;
+        }
+
+        .character-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .door-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 70%, rgba(139, 92, 246, 0.1));
+            pointer-events: none;
+        }
+
+        .character-info {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .character-name {
+            font-size: 2.2em;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .character-description {
+            font-size: 1.1em;
+            color: #cbd5e1;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+            margin-bottom: 20px;
+        }
+
+        /* DETAILS GRID */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .detail-card {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #475569;
+            /* HAPUS ANIMASI */
+            transition: none;
+        }
+
+        .detail-card:hover {
+            /* TIDAK ADA PERUBAHAN */
+            border-color: #475569;
+            transform: none;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: #60a5fa;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .detail-icon {
+            font-size: 1.5em;
+        }
+
+        .detail-content {
+            color: #e2e8f0;
+            line-height: 1.5;
+            font-size: 1em;
+        }
+
+        /* CONTROLS */
+        .controls-section {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 20px 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            /* HAPUS ANIMASI HOVER */
+            transition: all 0.2s;
+            min-width: 250px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            /* HAPUS ANIMASI */
+            transition: none;
+        }
+
+        .control-btn:hover::before {
+            /* TIDAK ADA ANIMASI */
+            left: -100%;
+        }
+
+        .allow-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .allow-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .reject-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 3px 10px rgba(239, 68, 68, 0.3);
+        }
+
+        .reject-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        /* FAMILY ALBUM SECTION */
+        .album-section {
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #10b981;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .family-member-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #475569;
+            /* HAPUS ANIMASI */
+            transition: none;
+            cursor: pointer;
+        }
+
+        .family-member-card:hover {
+            /* TIDAK ADA ANIMASI HOVER */
+            border-color: #475569;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .family-member-card.active {
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .member-avatar {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 2px solid #475569;
+        }
+
+        .member-info {
+            padding: 15px;
+        }
+
+        .member-name {
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .member-traits {
+            color: #cbd5e1;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .member-traits li {
+            margin: 6px 0;
+            padding-left: 5px;
+        }
+
+        /* ALERTS */
+        .alert-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            max-width: 350px;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+            animation: slideInUp 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-left: 6px solid;
+            display: none;
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9));
+            border-left-color: #10b981;
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9));
+            border-left-color: #ef4444;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9));
+            border-left-color: #f59e0b;
+        }
+
+        /* GAME OVER SCREEN */
+        .game-over {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-over-content {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .game-over-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .game-over-message {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        .final-score {
+            font-size: 1.1em;
+            color: #fbbf24;
+            margin-bottom: 30px;
+        }
+
+        .final-score span {
+            font-size: 1.3em;
+            color: #10b981;
+        }
+
+        .restart-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .play-again-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .play-again-btn:hover {
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* FOOTER */
+        .game-footer {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            margin-top: 40px;
+            border-top: 1px solid #475569;
+            font-size: 0.8em;
+        }
+
+        .creator-credit {
+            color: #f59e0b;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .scrollable-content {
+                padding: 20px 15px 30px;
+            }
+            
+            .static-stats {
+                grid-template-columns: repeat(2, 1fr);
+                top: 120px;
+            }
+            
+            .static-time {
+                top: 180px;
+            }
+            
+            .main-container {
+                padding-top: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 1.6em;
+            }
+            
+            .story-title {
+                font-size: 2em;
+            }
+            
+            .story-text {
+                font-size: 1.1em;
+            }
+            
+            .static-stats {
+                grid-template-columns: repeat(2, 1fr);
+                top: 110px;
+            }
+            
+            .static-time {
+                position: static;
+                margin: 10px auto;
+                width: fit-content;
+                display: none; /* Sembunyikan di mobile */
+            }
+            
+            .character-at-door {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .control-btn {
+                padding: 15px 30px;
+                min-width: 100%;
+                font-size: 1.1em;
+            }
+            
+            .main-container {
+                padding-top: 230px;
+            }
+            
+            .static-stats {
+                display: none; /* Sembunyikan stats di mobile */
+            }
+            
+            .game-footer {
+                padding: 15px;
+                font-size: 0.7em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .static-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-at-door {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .album-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .name-content {
+                padding: 30px;
+            }
+            
+            .story-content {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAME INPUT MODAL -->
+    <div class="name-modal" id="nameModal">
+        <div class="name-content">
+            <h1 class="name-title">THIEF OR MY FAMILY</h1>
+            
+            <div class="name-input-container">
+                <label class="name-label">MASUKKAN NAMA ANDA:</label>
+                <input type="text" 
+                       class="name-input" 
+                       id="playerNameInput" 
+                       placeholder="Contoh: Said Khazraji"
+                       maxlength="20"
+                       autocomplete="off">
+                <div class="name-hint">
+                    Nama akan ditampilkan selama permainan dan di akhir permainan.
+                </div>
+            </div>
+            
+            <button class="start-story-btn" id="startStoryBtn" disabled>
+                MEMULAI CERITA
+            </button>
+        </div>
+    </div>
+
+    <!-- STORY MODAL -->
+    <div class="story-modal" id="storyModal">
+        <div class="story-content">
+            <h1 class="story-title">THIEF OR MY FAMILY</h1>
+            
+            <div class="story-text">
+                <p><strong id="storyPlayerName">Said Khazraji</strong>, kamu tinggal di <strong>Aurora Falls</strong>. Biasanya damai, tapi belakangan ini...</p>
+                
+                <div class="news-banner">
+                    <div class="news-title">🚨 BERITA DARURAT 🚨</div>
+                    <p>Kasus pencurian meningkat 300% dalam sebulan terakhir! Sekelompok pencuri profesional 
+                    menyamar sebagai anggota keluarga untuk memasuki rumah korban.</p>
+                    <p>Modus operandi: Mereka mempelajari kebiasaan keluarga, lalu datang pada waktu yang tepat 
+                    dengan pakaian dan barang yang mirip. Tapi selalu ada <strong>satu detail yang terlupa!</strong></p>
+                </div>
+                
+                <p>Kamu memutuskan untuk mengambil tindakan. Setelah melihat berita malam ini, 
+                kamu membuat <strong>Album Keluarga</strong> yang detail untuk mengenali anggota keluargamu sendiri.</p>
+                
+                <p>Setiap orang memiliki <strong>ciri khas, barang bawaan, dan waktu kedatangan</strong> yang spesifik. 
+                Kamu akan berjaga di dekat pintu dan memeriksa setiap orang yang datang.</p>
+                
+                <p><strong>Aturan main:</strong><br>
+                1. Bandingkan orang yang datang dengan detail di Album Keluarga<br>
+                2. Jika SEMUA detail cocok → Izinkan masuk<br>
+                3. Jika ada SATU saja yang tidak cocok → Itu PENJAHAT!<br>
+                4. Hati-hati! Pencuri sangat pintar meniru</p>
+                
+                <p>Keluargamu bergantung padamu. Kamu tidak boleh salah...</p>
+            </div>
+            
+            <button class="start-game-btn" onclick="startGame()">🚪 BERJAGA DI PINTU</button>
+        </div>
+    </div>
+
+    <!-- BACKGROUND STATIS -->
+    <div class="static-house-bg">
+        <div class="house-silhouette"></div>
+        <div class="window-light window-1"></div>
+        <div class="window-light window-2"></div>
+    </div>
+
+    <!-- STATIC HEADER -->
+    <div class="static-header" id="staticHeader">
+        <h1 class="game-title">THIEF OR MY FAMILY</h1>
+        <p class="game-subtitle">"Aurora Falls - Jaga keluargamu dari pencuri penyamar"</p>
+        <div class="player-name-display" id="playerNameDisplay"></div>
+    </div>
+
+    <!-- STATIC STATS -->
+    <div class="static-stats" id="staticStats">
+        <div class="stat-card">
+            <div class="stat-value" id="dayCount">1</div>
+            <div class="stat-label">HARI</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="score">100</div>
+            <div class="stat-label">SKOR</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="familyTrust">100%</div>
+            <div class="stat-label">KEPERCAYAAN</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="thievesCaught">0</div>
+            <div class="stat-label">PENJAHAT DITANGKAP</div>
+        </div>
+    </div>
+
+    <!-- STATIC TIME DISPLAY -->
+    <div class="static-time" id="staticTime">
+        <span id="currentTime">14:00</span> | <span id="currentDay">Hari 1 - Aurora Falls</span>
+    </div>
+
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <div class="main-container" id="mainContainer">
+        <div class="scrollable-content">
+            <!-- CHARACTER INSPECTION SECTION -->
+            <section class="character-section">
+                <h2 class="section-title">👤 SIAPA YANG MENGETUK PINTU?</h2>
+                
+                <div class="warning-note">
+                    ⚠️ PERHATIAN: Pencuri di Aurora Falls sangat pintar! 
+                    Bandingkan dengan Album Keluarga di bawah!
+                </div>
+                
+                <div class="character-display">
+                    <div class="character-visual">
+                        <div class="character-at-door">
+                            <img id="charImage" class="character-image" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMyMDIwMzAiLz48dGV4dCB4PSIxNTAiIHk9IjE1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIwIiBmaWxsPSIjNjQ3NDhiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+U29tZW9uZSBhdCB0aGUgZG9vci4uLjwvdGV4dD48L3N2Zz4=" alt="Karakter">
+                            <div class="door-overlay"></div>
+                        </div>
+                        <h3 class="character-name" id="charName">ORANG ASING</h3>
+                    </div>
+                    
+                    <div class="character-info">
+                        <div class="character-description" id="charDesc">
+                            Seseorang sedang mengetuk pintu depan rumahmu di Aurora Falls. 
+                            <strong>Waspada terhadap pencuri penyamar!</strong>
+                        </div>
+                        
+                        <div class="details-grid">
+                            <div class="detail-card">
+                                <div class="detail-header">
+                                    <div class="detail-icon">👔</div>
+                                    <div>PAKAIAN</div>
+                                </div>
+                                <div class="detail-content" id="detailWearing">Memeriksa...</div>
+                            </div>
+                            
+                            <div class="detail-card">
+                                <div class="detail-header">
+                                    <div class="detail-icon">👜</div>
+                                    <div>BAWAAN</div>
+                                </div>
+                                <div class="detail-content" id="detailCarrying">Memeriksa...</div>
+                            </div>
+                            
+                            <div class="detail-card">
+                                <div class="detail-header">
+                                    <div class="detail-icon">📝</div>
+                                    <div>ALASAN DATANG</div>
+                                </div>
+                                <div class="detail-content" id="detailReason">Memeriksa...</div>
+                            </div>
+                            
+                            <div class="detail-card">
+                                <div class="detail-header">
+                                    <div class="detail-icon">⏰</div>
+                                    <div>WAKTU KEDATANGAN</div>
+                                </div>
+                                <div class="detail-content" id="detailTime">Memeriksa...</div>
+                            </div>
+                            
+                            <div class="detail-card">
+                                <div class="detail-header">
+                                    <div class="detail-icon">🎯</div>
+                                    <div>CIRI KHUSUS</div>
+                                </div>
+                                <div class="detail-content" id="detailSpecial">Memeriksa...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls-section">
+                    <button class="control-btn allow-btn" onclick="allowPerson()">✅ IZINKAN MASUK</button>
+                    <button class="control-btn reject-btn" onclick="rejectPerson()">🚨 TOLAK & PANGGIL POLISI</button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 25px; color: #94a3b8; font-size: 0.85em;">
+                    <strong>Scroll ke bawah untuk melihat Album Keluarga sebagai referensi</strong>
+                </div>
+            </section>
+
+            <!-- FAMILY ALBUM SECTION -->
+            <section class="album-section">
+                <h2 class="section-title">📖 ALBUM KELUARGA KHAS AURORA FALLS</h2>
+                <p style="text-align: center; color: #10b981; margin-bottom: 25px; font-size: 0.95em;">
+                    <strong>Dibuat untuk melindungi keluarga dari pencuri</strong>
+                </p>
+                
+                <div class="album-grid">
+                    <!-- AYAH -->
+                    <div class="family-member-card active" onclick="showMemberInfo('father')">
+                        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=300&fit=crop&crop=face" class="member-avatar" alt="Ayah">
+                        <div class="member-info">
+                            <h3 class="member-name">AYAH - Bapak</h3>
+                            <ul class="member-traits">
+                                <li><strong>Pakaian:</strong> Kemeja biru, dasi hitam, jam tangan silver</li>
+                                <li><strong>Bawaan WAJIB:</strong> Tas kerja hitam + kunci mobil + laptop bag</li>
+                                <li><strong>Waktu normal:</strong> 18:00 - 19:00 (pulang kerja)</li>
+                                <li><strong>Ciri khusus:</strong> Kumis rapi, cincin pernikahan, tas ada stiker perusahaan</li>
+                                <li><strong>Catatan:</strong> Pulang dari kantor di pusat kota Aurora Falls</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- IBU -->
+                    <div class="family-member-card" onclick="showMemberInfo('mother')">
+                        <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=400&h=300&fit=crop&crop=face" class="member-avatar" alt="Ibu">
+                        <div class="member-info">
+                            <h3 class="member-name">IBU - Ibu</h3>
+                            <ul class="member-traits">
+                                <li><strong>Pakaian:</strong> Dress merah, kalung mutiara, sepatu flat hitam</li>
+                                <li><strong>Bawaan WAJIB:</strong> Tas belanja besar + dompet coklat + daftar belanja</li>
+                                <li><strong>Waktu normal:</strong> 10:00-12:00 atau 15:00-17:00 (pulang belanja)</li>
+                                <li><strong>Ciri khusus:</strong> Gelang emas, rambut diikat, bawa struk belanja</li>
+                                <li><strong>Catatan:</strong> Belanja di Pasar Aurora setiap Selasa & Kamis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- KAKAK -->
+                    <div class="family-member-card" onclick="showMemberInfo('sister')">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop&crop=face" class="member-avatar" alt="Kakak">
+                        <div class="member-info">
+                            <h3 class="member-name">KAKAK - Sarah</h3>
+                            <ul class="member-traits">
+                                <li><strong>Pakaian:</strong> Jaket hoodie abu-abu, celana jeans robek, sneakers putih</li>
+                                <li><strong>Bawaan WAJIB:</strong> Tas ransel biru + skateboard + headphone</li>
+                                <li><strong>Waktu normal:</strong> 13:00 - 16:00 (pulang kuliah)</li>
+                                <li><strong>Ciri khusus:</strong> Rambut biru, tattoo di pergelangan, piercing hidung</li>
+                                <li><strong>Catatan:</strong> Mahasiswa Universitas Aurora Falls, jurusan Desain</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- ADIK -->
+                    <div class="family-member-card" onclick="showMemberInfo('brother')">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=300&fit=crop&crop=face" class="member-avatar" alt="Adik">
+                        <div class="member-info">
+                            <h3 class="member-name">ADIK - Rizky</h3>
+                            <ul class="member-traits">
+                                <li><strong>Pakaian:</strong> Seragam sekolah putih-biru, dasi merah, sepatu hitam</li>
+                                <li><strong>Bawaan WAJIB:</strong> Tas sekolah merah + buku gambar A3 + botol minum</li>
+                                <li><strong>Waktu normal:</strong> 14:00 - 15:00 (pulang sekolah)</li>
+                                <li><strong>Ciri khusus:</strong> Kacamata, bekas luka di dagu, ikat pinggang biru</li>
+                                <li><strong>Catatan:</strong> Siswa SMP Aurora Falls, suka menggambar manga</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- NENEK -->
+                    <div class="family-member-card" onclick="showMemberInfo('grandma')">
+                        <img src="https://i.pravatar.cc/400?img=69" class="member-avatar" alt="Nenek">
+                        <div class="member-info">
+                            <h3 class="member-name">NENEK - Mbah Siti</h3>
+                            <ul class="member-traits">
+                                <li><strong>Pakaian:</strong> Baju batik bunga, syal coklat, sepatu kulit</li>
+                                <li><strong>Bawaan WAJIB:</strong> Tongkat kayu + kantong kue nastar + tas ungu</li>
+                                <li><strong>Waktu normal:</strong> 09:00 - 17:00 (silaturahmi)</li>
+                                <li><strong>Ciri khusus:</strong> Rambut putih dikuncir, kacamata baca, sering batuk</li>
+                                <li><strong>Catatan:</strong> Tinggal di Perumahan Taman Aurora, sering bawa kue buatan sendiri</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <div class="game-footer">
+                <p>Game "Thief or My Family" - Sebuah cerita tentang melindungi keluarga di kota Aurora Falls</p>
+                <p class="creator-credit">Dibuat oleh: <span id="footerPlayerName">Player</span></p>
+                <p style="margin-top: 10px; font-size: 0.75em; color: #64748b;">
+                    Cerita fiksi yang terinspirasi dari keresahan akan keamanan keluarga di era modern
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALERT CONTAINER -->
+    <div class="alert-container">
+        <div id="alertBox" class="alert"></div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div class="game-over" id="gameOverScreen">
+        <div class="game-over-content">
+            <h2 class="game-over-title" id="gameOverTitle">GAME OVER</h2>
+            <p class="game-over-message" id="gameOverMessage"></p>
+            <div class="final-score" id="finalScore"></div>
+            <div class="restart-buttons">
+                <button class="menu-btn" onclick="goToMenu()">🏠 MENU UTAMA</button>
+                <button class="menu-btn play-again-btn" onclick="playAgain()">🔄 MAIN LAGI</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====================
+        // GAME VARIABLES
+        // ====================
+        let playerName = "";
+        let score = 100;
+        let day = 1;
+        let familyTrust = 100;
+        let thievesCaught = 0;
+        let currentCharacter = null;
+        let isThief = false;
+        let gameActive = true;
+        let gameTime = 14;
+
+        // ====================
+        // DOM ELEMENTS
+        // ====================
+        const nameModal = document.getElementById('nameModal');
+        const storyModal = document.getElementById('storyModal');
+        const mainContainer = document.getElementById('mainContainer');
+        const staticHeader = document.getElementById('staticHeader');
+        const staticStats = document.getElementById('staticStats');
+        const staticTime = document.getElementById('staticTime');
+        const playerNameInput = document.getElementById('playerNameInput');
+        const startStoryBtn = document.getElementById('startStoryBtn');
+        const storyPlayerName = document.getElementById('storyPlayerName');
+        const playerNameDisplay = document.getElementById('playerNameDisplay');
+        const footerPlayerName = document.getElementById('footerPlayerName');
+
+        const charNameEl = document.getElementById('charName');
+        const charImageEl = document.getElementById('charImage');
+        const charDescEl = document.getElementById('charDesc');
+        const detailWearingEl = document.getElementById('detailWearing');
+        const detailCarryingEl = document.getElementById('detailCarrying');
+        const detailReasonEl = document.getElementById('detailReason');
+        const detailTimeEl = document.getElementById('detailTime');
+        const detailSpecialEl = document.getElementById('detailSpecial');
+        const dayCountEl = document.getElementById('dayCount');
+        const scoreEl = document.getElementById('score');
+        const familyTrustEl = document.getElementById('familyTrust');
+        const thievesCaughtEl = document.getElementById('thievesCaught');
+        const currentTimeEl = document.getElementById('currentTime');
+        const currentDayEl = document.getElementById('currentDay');
+        const alertBox = document.getElementById('alertBox');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const gameOverTitle = document.getElementById('gameOverTitle');
+        const gameOverMessage = document.getElementById('gameOverMessage');
+        const finalScore = document.getElementById('finalScore');
+
+        // ====================
+        // NAME INPUT HANDLING
+        // ====================
+
+        // Enable button when name is entered
+        playerNameInput.addEventListener('input', function() {
+            const name = this.value.trim();
+            startStoryBtn.disabled = name.length < 2;
+        });
+
+        // Enter key to start story
+        playerNameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !startStoryBtn.disabled) {
+                startStory();
+            }
+        });
+
+        // Start story button
+        startStoryBtn.addEventListener('click', startStory);
+
+        function startStory() {
+            playerName = playerNameInput.value.trim();
+            if (playerName.length < 2) return;
+            
+            // Update story with player name
+            storyPlayerName.textContent = playerName;
+            
+            // Hide name modal, show story modal
+            nameModal.style.display = 'none';
+            storyModal.style.display = 'flex';
+        }
+
+        // ====================
+        // GAME FUNCTIONS
+        // ====================
+
+        function startGame() {
+            // Hide story modal
+            storyModal.style.display = 'none';
+            
+            // Update player name displays
+            playerNameDisplay.textContent = `Pemain: ${playerName}`;
+            footerPlayerName.textContent = playerName;
+            
+            // Show game UI
+            mainContainer.style.display = 'block';
+            staticHeader.style.display = 'block';
+            staticStats.style.display = 'grid';
+            staticTime.style.display = 'block';
+            
+            // Initialize game
+            resetGame();
+            initGame();
+        }
+
+        function resetGame() {
+            score = 100;
+            day = 1;
+            familyTrust = 100;
+            thievesCaught = 0;
+            gameTime = 14;
+            gameActive = true;
+            
+            updateStats();
+            generateCharacter();
+            updateTimeDisplay();
+            showMemberInfo('father');
+            
+            gameOverScreen.style.display = 'none';
+            showAlert("🚨 Anda sekarang berjaga di pintu! Waspada terhadap pencuri di Aurora Falls!", "warning");
+        }
+
+        function initGame() {
+            updateStats();
+            generateCharacter();
+            updateTimeDisplay();
+            showMemberInfo('father');
+            
+            gameOverScreen.style.display = 'none';
+            showAlert("🚨 Anda sekarang berjaga di pintu! Waspada terhadap pencuri di Aurora Falls!", "warning");
+        }
+
+        function updateStats() {
+            dayCountEl.textContent = day;
+            scoreEl.textContent = score;
+            familyTrustEl.textContent = familyTrust + '%';
+            thievesCaughtEl.textContent = thievesCaught;
+            currentDayEl.textContent = `Hari ${day} - Aurora Falls`;
+            
+            // Update header color based on trust (STATIS - tanpa animasi)
+            if (familyTrust < 30) {
+                staticHeader.style.borderBottomColor = '#ef4444';
+            } else if (familyTrust < 60) {
+                staticHeader.style.borderBottomColor = '#f59e0b';
+            } else {
+                staticHeader.style.borderBottomColor = '#10b981';
+            }
+        }
+
+        function updateTimeDisplay() {
+            currentTimeEl.textContent = gameTime + ':00';
+            
+            // Update background based on time (STATIS)
+            const bg = document.querySelector('.static-house-bg');
+            const windows = document.querySelectorAll('.window-light');
+            
+            if (gameTime >= 18 || gameTime <= 6) {
+                // Night - waktu rawan pencurian
+                bg.style.background = 'linear-gradient(to bottom, #0f172a, #1e293b, #334155)';
+                windows.forEach(w => {
+                    w.style.opacity = '1';
+                    w.style.boxShadow = '0 0 30px #fbbf24';
+                });
+            } else if (gameTime >= 6 && gameTime < 12) {
+                // Morning
+                bg.style.background = 'linear-gradient(to bottom, #4f46e5, #6366f1, #818cf8)';
+                windows.forEach(w => w.style.opacity = '0.5');
+            } else {
+                // Day
+                bg.style.background = 'linear-gradient(to bottom, #0ea5e9, #38bdf8, #7dd3fc)';
+                windows.forEach(w => w.style.opacity = '0.3');
+            }
+        }
+
+        // GAME DATA (sama seperti sebelumnya)
+        const familyDatabase = {
+            father: {
+                name: "BAPAK",
+                images: {
+                    real: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Pulang dari kantor di pusat kota Aurora Falls",
+                time: "18:00 - 19:00",
+                details: {
+                    real: {
+                        wearing: "Kemeja biru, dasi hitam, jam tangan silver",
+                        carrying: "Tas kerja hitam, kunci mobil, laptop bag",
+                        reason: "Pulang kerja dari kantor di pusat kota",
+                        special: "Ada kumis rapi, pakai cincin pernikahan, tas ada stiker perusahaan Aurora Corp"
+                    },
+                    thief: {
+                        wearing: "Kemeja biru, dasi hitam, jam tangan silver",
+                        carrying: "Tas kerja hitam, kunci mobil",
+                        reason: "Pulang kerja",
+                        special: "Ada kumis rapi, pakai cincin pernikahan"
+                    }
+                }
+            },
+            mother: {
+                name: "IBU",
+                images: {
+                    real: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Baru pulang belanja dari Pasar Aurora",
+                time: "10:00-12:00 atau 15:00-17:00",
+                details: {
+                    real: {
+                        wearing: "Dress merah, kalung mutiara, sepatu flat hitam",
+                        carrying: "Tas belanja besar, dompet panjang coklat, daftar belanja",
+                        reason: "Baru belanja kebutuhan mingguan di Pasar Aurora",
+                        special: "Gelang emas, rambut diikat rapi, bawa struk belanja pasar"
+                    },
+                    thief: {
+                        wearing: "Dress merah, sepatu flat hitam",
+                        carrying: "Tas belanja besar, dompet panjang coklat",
+                        reason: "Baru belanja",
+                        special: "Rambut diikat rapi"
+                    }
+                }
+            },
+            sister: {
+                name: "SARAH",
+                images: {
+                    real: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Pulang dari kampus Universitas Aurora Falls",
+                time: "13:00 - 16:00",
+                details: {
+                    real: {
+                        wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
+                        carrying: "Tas ransel biru, skateboard, headphone",
+                        reason: "Pulang kuliah dari Universitas Aurora Falls",
+                        special: "Rambut biru pastel, tattoo 'Aurora' di pergelangan kanan, piercing hidung"
+                    },
+                    thief: {
+                        wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
+                        carrying: "Tas ransel biru, headphone",
+                        reason: "Pulang kuliah",
+                        special: "Rambut biru pastel, piercing hidung"
+                    }
+                }
+            },
+            brother: {
+                name: "RIZKY",
+                images: {
+                    real: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Pulang dari SMP Aurora Falls",
+                time: "14:00 - 15:00",
+                details: {
+                    real: {
+                        wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
+                        carrying: "Tas sekolah merah, buku gambar A3, botol minum",
+                        reason: "Pulang sekolah dari SMP Aurora Falls",
+                        special: "Pakai kacamata, bekas luka di dagu (jatuh saat kecil), ikat pinggang biru"
+                    },
+                    thief: {
+                        wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
+                        carrying: "Tas sekolah merah, botol minum",
+                        reason: "Pulang sekolah",
+                        special: "Pakai kacamata, bekas luka di dagu, ikat pinggang biru"
+                    }
+                }
+            },
+            grandma: {
+                name: "MBAH SITI",
+                images: {
+                    real: "https://i.pravatar.cc/300?img=69",
+                    thief: "https://i.pravatar.cc/300?img=69"
+                },
+                desc: "Berkunjung dari Perumahan Taman Aurora",
+                time: "09:00 - 17:00",
+                details: {
+                    real: {
+                        wearing: "Baju batik bunga, syal coklat, sepatu kulit",
+                        carrying: "Tongkat kayu, kantong kue nastar, tas kecil ungu",
+                        reason: "Silaturahmi dari Perumahan Taman Aurora",
+                        special: "Rambut putih dikuncir, kacamata baca, sering batuk ringan (alergi)"
+                    },
+                    thief: {
+                        wearing: "Baju batik bunga, sepatu kulit",
+                        carrying: "Tongkat kayu, tas kecil ungu",
+                        reason: "Silaturahmi",
+                        special: "Rambut putih dikuncir, kacamata baca"
+                    }
+                }
+            }
+        };
+
+        function generateCharacter() {
+            if (!gameActive) return;
+            
+            const characters = ['father', 'mother', 'sister', 'brother', 'grandma'];
+            const charType = characters[Math.floor(Math.random() * characters.length)];
+            
+            isThief = Math.random() < 0.45;
+            const charData = familyDatabase[charType];
+            
+            charNameEl.textContent = isThief ? `??? (${charData.name})` : charData.name;
+            charImageEl.src = charData.images.real;
+            
+            const descriptions = [
+                "Ada yang mengetuk pintu di Aurora Falls...",
+                "Seseorang berdiri di depan pintu rumah...",
+                "Terdengar ketukan di pintu depan...",
+                "Ada tamu yang datang ke rumah..."
+            ];
+            charDescEl.textContent = descriptions[Math.floor(Math.random() * descriptions.length)];
+            
+            const details = isThief ? charData.details.thief : charData.details.real;
+            
+            detailWearingEl.textContent = details.wearing;
+            detailCarryingEl.textContent = details.carrying;
+            detailReasonEl.textContent = details.reason;
+            detailTimeEl.textContent = `Datang pada pukul: ${gameTime}:00 | Waktu normal: ${charData.time}`;
+            detailSpecialEl.textContent = details.special;
+            
+            currentCharacter = {
+                type: charType,
+                isThief: isThief,
+                name: charData.name,
+                normalTime: charData.time
+            };
+            
+            advanceTime();
+            
+            setTimeout(() => {
+                document.querySelector('.character-section').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 300);
+        }
+
+        function advanceTime() {
+            gameTime += Math.floor(Math.random() * 3) + 1;
+            
+            if (gameTime > 22) {
+                gameTime = 8 + Math.floor(Math.random() * 4);
+                day++;
+                
+                const news = [
+                    "Berita: Kasus pencurian meningkat di wilayah Aurora Falls!",
+                    "Polisi Aurora Falls mengimbau warga waspada!",
+                    "Geng pencuri masih berkeliaran di kota!",
+                    "Malam hari adalah waktu favorit pencuri!"
+                ];
+                showAlert(`🌅 Hari ${day} - ${news[Math.floor(Math.random() * news.length)]}`, "warning");
+                
+                if (day % 2 === 0) {
+                    showAlert("⚠️ PERINGATAN: Pencuri semakin pintar menyamar!", "warning");
+                }
+            }
+            
+            updateTimeDisplay();
+        }
+
+        function showMemberInfo(member) {
+            const data = familyDatabase[member];
+            
+            document.querySelectorAll('.family-member-card').forEach(el => {
+                el.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            showAlert(`Melihat detail ${data.name}. Bandingkan dengan orang di atas!`, "warning");
+        }
+
+        function showAlert(message, type) {
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type}`;
+            alertBox.style.display = 'block';
+            
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 3000);
+        }
+
+        function allowPerson() {
+            if (!gameActive) return;
+            
+            if (!isThief) {
+                score += 30;
+                familyTrust = Math.min(100, familyTrust + 15);
+                showAlert(`✅ BENAR! Itu ${currentCharacter.name} asli. Keluarga aman. (+30 Poin)`, 'success');
+            } else {
+                score -= 70;
+                familyTrust -= 40;
+                showAlert(`❌ SALAH BESAR! Itu PENJAHAT! Barang-barang dicuri! (-70 Poin)`, 'error');
+                
+                if (familyTrust <= 0) {
+                    endGame(false);
+                    return;
+                }
+            }
+            
+            updateStats();
+            setTimeout(generateCharacter, 1500);
+        }
+
+        function rejectPerson() {
+            if (!gameActive) return;
+            
+            if (isThief) {
+                score += 60;
+                thievesCaught++;
+                familyTrust += 15;
+                showAlert(`🎯 LUAR BIASA! Penjahat berhasil ditangkap! Polisi Aurora Falls datang. (+60 Poin)`, 'success');
+                
+                if (thievesCaught % 3 === 0) {
+                    score += 30;
+                    showAlert(`🎉 Bonus! 3 penjahat tertangkap! Warga Aurora Falls lebih aman. (+30 Bonus Poin)`, 'success');
+                }
+            } else {
+                score -= 50;
+                familyTrust -= 30;
+                showAlert(`😢 SALAH! Itu ${currentCharacter.name} asli! Mereka kecewa padamu. (-50 Poin)`, 'error');
+                
+                if (familyTrust <= 0) {
+                    endGame(false);
+                    return;
+                }
+            }
+            
+            updateStats();
+            setTimeout(generateCharacter, 1500);
+        }
+
+        function endGame(success) {
+            gameActive = false;
+            
+            gameOverTitle.textContent = success ? "🎉 SELAMAT!" : "💀 GAME OVER";
+            gameOverTitle.style.color = success ? "#10b981" : "#ef4444";
+            
+            if (success) {
+                gameOverMessage.textContent = `${playerName}, kamu berhasil melindungi keluargamu! Pencuri tidak berhasil masuk ke rumahmu.`;
+            } else {
+                gameOverMessage.textContent = `${playerName}, pencuri berhasil masuk dan menjarah rumah! Keluargamu tidak aman lagi di Aurora Falls.`;
+            }
+            
+            finalScore.innerHTML = `
+                Skor Akhir: <span>${score}</span><br>
+                Penjahat Tertangkap: <span>${thievesCaught}</span><br>
+                Hari Bertahan: <span>${day}</span><br>
+                Kepercayaan Keluarga: <span>${familyTrust}%</span>
+            `;
+            
+            gameOverScreen.style.display = 'flex';
+        }
+
+        function goToMenu() {
+            // Reset semua dan kembali ke awal
+            gameOverScreen.style.display = 'none';
+            mainContainer.style.display = 'none';
+            staticHeader.style.display = 'none';
+            staticStats.style.display = 'none';
+            staticTime.style.display = 'none';
+            
+            // Reset input name
+            playerNameInput.value = '';
+            startStoryBtn.disabled = true;
+            
+            // Show name modal
+            nameModal.style.display = 'flex';
+        }
+
+        function playAgain() {
+            // Reset game dengan nama yang sama
+            gameOverScreen.style.display = 'none';
+            resetGame();
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', function(e) {
+            if (!gameActive) return;
+            
+            if (e.key === 'a' || e.key === 'A') {
+                allowPerson();
+            } else if (e.key === 'r' || e.key === 'R') {
+                rejectPerson();
+            } else if (e.key === ' ') {
+                document.querySelector('.character-section').scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowDown') {
+                document.querySelector('.album-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Initialize
+        window.onload = function() {
+            // Show name modal first
+            nameModal.style.display = 'flex';
+        };
+    </script>
+</body>
+</html>
