@@ -1,4 +1,4 @@
-setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kalau masih hari pertama jangan ada ibu lagi ketika semua anggota keluarga yang asli sudah masuk baru lanjut hari ke dua kalau kita membuat kesalahan kita akan kalah dan mengulang semuanya<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -442,21 +442,13 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             min-width: 280px;
         }
 
+        /* NAMA WARNA HIJAU SAJA */
         .character-name {
             font-size: 2.2em;
-            color: #fbbf24;
+            color: #10b981; /* WARNA HIJAU */
             margin-bottom: 12px;
             text-align: center;
-        }
-
-        /* WARNA BERBEDA UNTUK PENJAHAT */
-        .character-name.thief {
-            color: #ef4444;
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-        }
-
-        .character-name.family {
-            color: #10b981;
+            text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
         }
 
         .character-description {
@@ -503,34 +495,6 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             color: #e2e8f0;
             line-height: 1.5;
             font-size: 1em;
-        }
-
-        /* HIGHLIGHT UNTUK DETAIL YANG TIDAK COCOK */
-        .detail-content.missing {
-            color: #ef4444;
-            font-weight: bold;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .detail-content.missing::before {
-            content: "❌";
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        .detail-content.correct {
-            color: #10b981;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .detail-content.correct::before {
-            content: "✅";
-            position: absolute;
-            left: 0;
-            top: 0;
         }
 
         /* CONTROLS */
@@ -623,7 +587,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
 
         .member-name {
             font-size: 1.4em;
-            color: #fbbf24;
+            color: #10b981; /* WARNA HIJAU */
             margin-bottom: 12px;
             text-align: center;
         }
@@ -637,11 +601,6 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
         .member-traits li {
             margin: 6px 0;
             padding-left: 5px;
-        }
-
-        .critical-item {
-            color: #ef4444;
-            font-weight: bold;
         }
 
         /* ALERTS */
@@ -706,7 +665,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             background: linear-gradient(135deg, #0f172a, #1e293b);
             padding: 40px;
             border-radius: 20px;
-            border: 3px solid;
+            border: 3px solid #ef4444;
             max-width: 500px;
             text-align: center;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
@@ -716,6 +675,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             font-size: 2.5em;
             margin-bottom: 20px;
             font-weight: bold;
+            color: #ef4444;
         }
 
         .game-over-message {
@@ -733,7 +693,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
 
         .final-score span {
             font-size: 1.3em;
-            color: #10b981;
+            color: #10b981; /* WARNA HIJAU */
         }
 
         .restart-buttons {
@@ -766,6 +726,65 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
         }
 
         .play-again-btn:hover {
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* WEEKLY SUCCESS SCREEN */
+        .weekly-success {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2001;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .weekly-success-content {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid #10b981;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .weekly-success-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #10b981; /* WARNA HIJAU */
+        }
+
+        .weekly-success-message {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        .continue-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
         }
 
@@ -879,7 +898,8 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 1. Setiap anggota keluarga hanya muncul SATU KALI per hari<br>
                 2. Jika ibu sudah datang hari ini, ibu tidak akan datang lagi hari ini<br>
                 3. Bandingkan SEMUA detail dengan Album Keluarga<br>
-                4. Jika salah izinkan penjahat, kamu langsung kalah!</p>
+                4. <strong style="color:#ef4444">SATU KESALAHAN = KALAH!</strong><br>
+                5. Bertahan 7 hari tanpa kesalahan = MENANG!</p>
             </div>
             
             <button class="start-game-btn" onclick="startGame()">🚪 BERJAGA DI PINTU</button>
@@ -915,14 +935,14 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             <div class="stat-label">KEPERCAYAAN</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value" id="thievesCaught">0</div>
-            <div class="stat-label">PENJAHAT DITANGKAP</div>
+            <div class="stat-value" id="perfectDays">0</div>
+            <div class="stat-label">HARI SEMPURNA</div>
         </div>
     </div>
 
     <!-- STATIC TIME DISPLAY -->
     <div class="static-time" id="staticTime">
-        <span id="currentTime">14:00</span> | <span id="currentDay">Hari 1 - Aurora Falls</span>
+        <span id="currentTime">14:00</span> | <span id="currentDay">Hari 1 - Minggu 1</span>
     </div>
 
     <!-- MAIN SCROLLABLE CONTENT -->
@@ -935,7 +955,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 <h2 class="section-title">👤 SIAPA YANG MENGETUK PINTU?</h2>
                 
                 <div class="warning-note">
-                    ⚠️ ATURAN: SATU ORANG SATU HARI! Jika ibu sudah datang hari ini, tidak akan ada ibu lagi hari ini!
+                    ⚠️ PERINGATAN: SATU KESALAHAN SAJA DAN KAMU KALAH!
                 </div>
                 
                 <div class="character-display">
@@ -1022,9 +1042,9 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                             <h3 class="member-name">AYAH - Bapak</h3>
                             <ul class="member-traits">
                                 <li><strong>Pakaian:</strong> Kemeja biru, dasi hitam, jam tangan silver</li>
-                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tas kerja hitam + kunci mobil + laptop bag</li>
+                                <li><strong>BAWAAN WAJIB:</strong> Tas kerja hitam + kunci mobil + laptop bag</li>
                                 <li><strong>Waktu normal:</strong> 18:00 - 19:00</li>
-                                <li class="critical-item"><strong>Ciri khusus:</strong> Kumis, cincin pernikahan, stiker perusahaan di tas</li>
+                                <li><strong>Ciri khusus:</strong> Kumis, cincin pernikahan, stiker perusahaan di tas</li>
                                 <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
@@ -1036,10 +1056,10 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                         <div class="member-info">
                             <h3 class="member-name">IBU - Ibu</h3>
                             <ul class="member-traits">
-                                <li class="critical-item"><strong>Pakaian:</strong> Dress merah, kalung mutiara, sepatu flat hitam</li>
+                                <li><strong>Pakaian:</strong> Dress merah, kalung mutiara, sepatu flat hitam</li>
                                 <li><strong>Bawaan:</strong> Tas belanja besar + dompet coklat + daftar belanja</li>
                                 <li><strong>Waktu normal:</strong> 10:00-12:00 atau 15:00-17:00</li>
-                                <li class="critical-item"><strong>Ciri khusus:</strong> Gelang emas, rambut diikat, struk belanja</li>
+                                <li><strong>Ciri khusus:</strong> Gelang emas, rambut diikat, struk belanja</li>
                                 <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
@@ -1052,9 +1072,9 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                             <h3 class="member-name">KAKAK - Sarah</h3>
                             <ul class="member-traits">
                                 <li><strong>Pakaian:</strong> Jaket hoodie abu-abu, celana jeans robek, sneakers putih</li>
-                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tas ransel biru + skateboard + headphone</li>
+                                <li><strong>BAWAAN WAJIB:</strong> Tas ransel biru + skateboard + headphone</li>
                                 <li><strong>Waktu normal:</strong> 13:00 - 16:00</li>
-                                <li class="critical-item"><strong>Ciri khusus:</strong> Rambut biru, tattoo 'Aurora', piercing hidung</li>
+                                <li><strong>Ciri khusus:</strong> Rambut biru, tattoo 'Aurora', piercing hidung</li>
                                 <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
@@ -1067,7 +1087,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                             <h3 class="member-name">ADIK - Rizky</h3>
                             <ul class="member-traits">
                                 <li><strong>Pakaian:</strong> Seragam sekolah putih-biru, dasi merah, sepatu hitam</li>
-                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tas sekolah merah + buku gambar A3 + botol minum</li>
+                                <li><strong>BAWAAN WAJIB:</strong> Tas sekolah merah + buku gambar A3 + botol minum</li>
                                 <li><strong>Waktu normal:</strong> 14:00 - 15:00</li>
                                 <li><strong>Ciri khusus:</strong> Kacamata, bekas luka di dagu, ikat pinggang biru</li>
                                 <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
@@ -1081,8 +1101,8 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                         <div class="member-info">
                             <h3 class="member-name">NENEK - Mbah Siti</h3>
                             <ul class="member-traits">
-                                <li class="critical-item"><strong>Pakaian:</strong> Baju batik bunga, syal coklat, sepatu kulit</li>
-                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tongkat kayu + kantong kue nastar + tas ungu</li>
+                                <li><strong>Pakaian:</strong> Baju batik bunga, syal coklat, sepatu kulit</li>
+                                <li><strong>BAWAAN WAJIB:</strong> Tongkat kayu + kantong kue nastar + tas ungu</li>
                                 <li><strong>Waktu normal:</strong> 09:00 - 17:00</li>
                                 <li><strong>Ciri khusus:</strong> Rambut putih dikuncir, kacamata baca, sering batuk</li>
                                 <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
@@ -1108,13 +1128,23 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
     <!-- GAME OVER SCREEN -->
     <div class="game-over" id="gameOverScreen">
         <div class="game-over-content">
-            <h2 class="game-over-title" id="gameOverTitle">GAME OVER</h2>
+            <h2 class="game-over-title" id="gameOverTitle">KALAH!</h2>
             <p class="game-over-message" id="gameOverMessage"></p>
             <div class="final-score" id="finalScore"></div>
             <div class="restart-buttons">
                 <button class="menu-btn" onclick="goToMenu()">🏠 MENU UTAMA</button>
-                <button class="menu-btn play-again-btn" onclick="playAgain()">🔄 MAIN LAGI</button>
+                <button class="menu-btn play-again-btn" onclick="playAgain()">🔄 COBA LAGI</button>
             </div>
+        </div>
+    </div>
+
+    <!-- WEEKLY SUCCESS SCREEN -->
+    <div class="weekly-success" id="weeklySuccessScreen">
+        <div class="weekly-success-content">
+            <h2 class="weekly-success-title" id="weeklySuccessTitle">🎉 SELAMAT!</h2>
+            <p class="weekly-success-message" id="weeklySuccessMessage"></p>
+            <div class="final-score" id="weeklyScore"></div>
+            <button class="continue-btn" onclick="continueToNextWeek()">➡️ LANJUTKAN KE MINGGU BERIKUTNYA</button>
         </div>
     </div>
 
@@ -1125,16 +1155,17 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
         let playerName = "";
         let score = 100;
         let day = 1;
+        let week = 1;
+        let perfectDays = 0;
         let familyTrust = 100;
-        let thievesCaught = 0;
         let currentCharacter = null;
         let isThief = false;
         let gameActive = true;
         let gameTime = 14;
-        let familyVisitedToday = []; // Daftar keluarga yang sudah datang hari ini
-        let familyOrderForToday = []; // Urutan keluarga yang akan datang hari ini
-        let dailyFamilyCount = 0; // Jumlah keluarga yang akan datang hari ini
-        let visitedCount = 0; // Sudah berapa yang datang
+        let familyVisitedToday = [];
+        let dailyFamilyCount = 0;
+        let visitedCount = 0;
+        let madeMistakeToday = false;
 
         // ====================
         // GAME DATA
@@ -1148,7 +1179,6 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 },
                 desc: "Pulang dari kantor di pusat kota Aurora Falls",
                 time: "18:00 - 19:00",
-                criticalItems: ["laptop bag", "stiker perusahaan"],
                 details: {
                     real: {
                         wearing: "Kemeja biru, dasi hitam, jam tangan silver",
@@ -1160,8 +1190,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                         wearing: "Kemeja biru, dasi hitam, jam tangan silver",
                         carrying: "Tas kerja hitam, kunci mobil",
                         reason: "Pulang kerja",
-                        special: "Ada kumis rapi, pakai cincin pernikahan",
-                        missing: "Tidak membawa laptop bag dan tas tanpa stiker perusahaan"
+                        special: "Ada kumis rapi, pakai cincin pernikahan"
                     }
                 }
             },
@@ -1173,7 +1202,6 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 },
                 desc: "Baru pulang belanja dari Pasar Aurora",
                 time: "10:00-12:00 atau 15:00-17:00",
-                criticalItems: ["kalung mutiara", "gelang emas"],
                 details: {
                     real: {
                         wearing: "Dress merah, kalung mutiara, sepatu flat hitam",
@@ -1185,8 +1213,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                         wearing: "Dress merah, sepatu flat hitam",
                         carrying: "Tas belanja besar, dompet panjang coklat",
                         reason: "Baru belanja",
-                        special: "Rambut diikat rapi",
-                        missing: "Tidak memakai kalung mutiara dan gelang emas"
+                        special: "Rambut diikat rapi"
                     }
                 }
             },
@@ -1198,7 +1225,6 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 },
                 desc: "Pulang dari kampus Universitas Aurora Falls",
                 time: "13:00 - 16:00",
-                criticalItems: ["skateboard", "tattoo"],
                 details: {
                     real: {
                         wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
@@ -1210,8 +1236,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                         wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
                         carrying: "Tas ransel biru, headphone",
                         reason: "Pulang kuliah",
-                        special: "Rambut biru pastel, piercing hidung",
-                        missing: "Tidak membawa skateboard dan tidak ada tattoo"
+                        special: "Rambut biru pastel, piercing hidung"
                     }
                 }
             },
@@ -1223,7 +1248,6 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 },
                 desc: "Pulang dari SMP Aurora Falls",
                 time: "14:00 - 15:00",
-                criticalItems: ["buku gambar"],
                 details: {
                     real: {
                         wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
@@ -1235,8 +1259,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                         wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
                         carrying: "Tas sekolah merah, botol minum",
                         reason: "Pulang sekolah",
-                        special: "Pakai kacamata, bekas luka di dagu, ikat pinggang biru",
-                        missing: "Tidak membawa buku gambar A3"
+                        special: "Pakai kacamata, bekas luka di dagu, ikat pinggang biru"
                     }
                 }
             },
@@ -1248,7 +1271,6 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 },
                 desc: "Berkunjung dari Perumahan Taman Aurora",
                 time: "09:00 - 17:00",
-                criticalItems: ["syal coklat", "kantong kue"],
                 details: {
                     real: {
                         wearing: "Baju batik bunga, syal coklat, sepatu kulit",
@@ -1260,8 +1282,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                         wearing: "Baju batik bunga, sepatu kulit",
                         carrying: "Tongkat kayu, tas kecil ungu",
                         reason: "Silaturahmi",
-                        special: "Rambut putih dikuncir, kacamata baca",
-                        missing: "Tidak memakai syal coklat dan tidak membawa kue"
+                        special: "Rambut putih dikuncir, kacamata baca"
                     }
                 }
             }
@@ -1294,7 +1315,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
         const dayCountEl = document.getElementById('dayCount');
         const scoreEl = document.getElementById('score');
         const familyTrustEl = document.getElementById('familyTrust');
-        const thievesCaughtEl = document.getElementById('thievesCaught');
+        const perfectDaysEl = document.getElementById('perfectDays');
         const currentTimeEl = document.getElementById('currentTime');
         const currentDayEl = document.getElementById('currentDay');
         const alertBox = document.getElementById('alertBox');
@@ -1302,6 +1323,10 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
         const gameOverTitle = document.getElementById('gameOverTitle');
         const gameOverMessage = document.getElementById('gameOverMessage');
         const finalScore = document.getElementById('finalScore');
+        const weeklySuccessScreen = document.getElementById('weeklySuccessScreen');
+        const weeklySuccessTitle = document.getElementById('weeklySuccessTitle');
+        const weeklySuccessMessage = document.getElementById('weeklySuccessMessage');
+        const weeklyScore = document.getElementById('weeklyScore');
 
         // ====================
         // NAME INPUT HANDLING
@@ -1351,54 +1376,32 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
         function resetGame() {
             score = 100;
             day = 1;
+            week = 1;
             familyTrust = 100;
-            thievesCaught = 0;
+            perfectDays = 0;
             gameTime = 14;
             gameActive = true;
             familyVisitedToday = [];
-            familyOrderForToday = [];
-            visitedCount = 0;
             dailyFamilyCount = Math.min(day + 1, 5);
+            visitedCount = 0;
+            madeMistakeToday = false;
             
-            setupNewDay();
             updateStats();
             generateCharacter();
             updateTimeDisplay();
             showMemberInfo('father');
             
             gameOverScreen.style.display = 'none';
-            showAlert("🚨 Anda sekarang berjaga di pintu! ATURAN: SATU ORANG SATU HARI!", "warning");
-        }
-
-        function setupNewDay() {
-            familyVisitedToday = [];
-            visitedCount = 0;
-            
-            const allMembers = ['father', 'mother', 'sister', 'brother', 'grandma'];
-            
-            dailyFamilyCount = Math.min(day + 2, 5);
-            
-            familyOrderForToday = [...allMembers]
-                .sort(() => Math.random() - 0.5)
-                .slice(0, dailyFamilyCount);
-            
-            showAlert(`📅 HARI ${day}: Akan ada ${dailyFamilyCount} orang datang hari ini. Setiap orang hanya datang SEKALI!`, "warning");
+            weeklySuccessScreen.style.display = 'none';
+            showAlert("🚨 Anda sekarang berjaga di pintu! INGAT: SATU KESALAHAN = KALAH!", "warning");
         }
 
         function updateStats() {
             dayCountEl.textContent = day;
             scoreEl.textContent = score;
             familyTrustEl.textContent = familyTrust + '%';
-            thievesCaughtEl.textContent = thievesCaught;
-            currentDayEl.textContent = `Hari ${day} - Aurora Falls`;
-            
-            if (familyTrust < 30) {
-                staticHeader.style.borderBottomColor = '#ef4444';
-            } else if (familyTrust < 60) {
-                staticHeader.style.borderBottomColor = '#f59e0b';
-            } else {
-                staticHeader.style.borderBottomColor = '#10b981';
-            }
+            perfectDaysEl.textContent = perfectDays;
+            currentDayEl.textContent = `Hari ${day} - Minggu ${week}`;
         }
 
         function updateTimeDisplay() {
@@ -1425,36 +1428,65 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
         function generateCharacter() {
             if (!gameActive) return;
             
-            if (visitedCount >= dailyFamilyCount) {
+            // Cek apakah sudah semua anggota keluarga datang hari ini
+            if (familyVisitedToday.length >= 5) {
+                // Semua anggota keluarga sudah datang hari ini
+                if (!madeMistakeToday) {
+                    perfectDays++;
+                    score += 50;
+                    familyTrust = Math.min(100, familyTrust + 10);
+                    showAlert(`🎉 HARI ${day} SELESAI! Kamu tidak membuat kesalahan! (+50 Poin)`, 'success');
+                    
+                    // Cek apakah sudah 7 hari sempurna
+                    if (perfectDays >= 7) {
+                        showWeeklySuccess();
+                        return;
+                    }
+                }
+                
+                // Pindah ke hari berikutnya
                 day++;
-                setupNewDay();
-                updateStats();
+                familyVisitedToday = [];
+                visitedCount = 0;
+                madeMistakeToday = false;
                 gameTime = 14;
+                
+                updateStats();
                 updateTimeDisplay();
+                
+                if (day > 7) {
+                    day = 1;
+                    week++;
+                }
+                
+                showAlert(`📅 MEMASUKI HARI ${day}, MINGGU ${week}`, "warning");
             }
+            
+            const allMembers = ['father', 'mother', 'sister', 'brother', 'grandma'];
+            const availableMembers = allMembers.filter(member => !familyVisitedToday.includes(member));
             
             let charType;
             
-            if (visitedCount < familyOrderForToday.length) {
-                charType = familyOrderForToday[visitedCount];
+            if (availableMembers.length > 0) {
+                // Masih ada anggota keluarga yang belum datang hari ini
+                if (Math.random() < 0.7) { // 70% kemungkinan keluarga asli
+                    charType = availableMembers[Math.floor(Math.random() * availableMembers.length)];
+                    isThief = false;
+                } else { // 30% kemungkinan penjahat dengan nama anggota keluarga
+                    charType = allMembers[Math.floor(Math.random() * allMembers.length)];
+                    isThief = true;
+                }
             } else {
-                const remainingTypes = ['father', 'mother', 'sister', 'brother', 'grandma']
-                    .filter(type => !familyVisitedToday.includes(type));
-                charType = remainingTypes[Math.floor(Math.random() * remainingTypes.length)];
+                // Semua anggota keluarga sudah datang, sekarang hanya penjahat
+                charType = allMembers[Math.floor(Math.random() * allMembers.length)];
+                isThief = true;
             }
             
-            isThief = Math.random() < 0.5;
-            
-            if (!isThief) {
-                familyVisitedToday.push(charType);
-            }
-            
-            visitedCount++;
             const charData = familyDatabase[charType];
             
+            // NAMA SELALU WARNA HIJAU - TIDAK ADA BEDANYA
             charNameEl.textContent = charData.name;
-            charNameEl.className = isThief ? 'character-name thief' : 'character-name family';
-            
+            charNameEl.className = 'character-name'; // HANYA WARNA HIJAU
             charImageEl.src = charData.images.real;
             
             const descriptions = [
@@ -1467,38 +1499,16 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             
             const details = isThief ? charData.details.thief : charData.details.real;
             
-            detailWearingEl.className = 'detail-content';
-            detailCarryingEl.className = 'detail-content';
-            detailReasonEl.className = 'detail-content';
-            detailTimeEl.className = 'detail-content';
-            detailSpecialEl.className = 'detail-content';
-            
             detailWearingEl.textContent = details.wearing;
             detailCarryingEl.textContent = details.carrying;
             detailReasonEl.textContent = details.reason;
             detailTimeEl.textContent = `Datang pada pukul: ${gameTime}:00 | Waktu normal: ${charData.time}`;
+            detailSpecialEl.textContent = details.special;
             
             if (isThief) {
                 thiefWarning.style.display = 'block';
-                detailSpecialEl.innerHTML = `<span class="detail-content missing">${details.missing}</span>`;
-                
-                const isWrongTime = !charData.time.includes(gameTime + ':') && 
-                                    !(charData.time.includes('-') && 
-                                      gameTime >= parseInt(charData.time.split('-')[0]) && 
-                                      gameTime <= parseInt(charData.time.split('-')[1].split(':')[0]));
-                
-                if (isWrongTime) {
-                    detailTimeEl.innerHTML = `<span class="detail-content missing">Datang pada pukul: ${gameTime}:00 | Waktu normal: ${charData.time} (TIDAK SESUAI!)</span>`;
-                }
-                
-                showAlert("🚨 PERHATIAN: Ini mungkin penjahat! Cek apakah ini orang kedua dengan nama yang sama hari ini!", "warning");
             } else {
                 thiefWarning.style.display = 'none';
-                detailSpecialEl.textContent = details.special;
-                
-                if (familyVisitedToday.filter(type => type === charType).length > 1) {
-                    detailSpecialEl.innerHTML = `<span class="detail-content missing">PERINGATAN: Orang ini sudah datang hari ini! Mungkin penjahat!</span>`;
-                }
             }
             
             currentCharacter = {
@@ -1508,6 +1518,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
                 normalTime: charData.time
             };
             
+            visitedCount++;
             advanceTime();
             
             setTimeout(() => {
@@ -1546,25 +1557,24 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             
             setTimeout(() => {
                 alertBox.style.display = 'none';
-            }, 4000);
+            }, 3000);
         }
 
         function allowPerson() {
             if (!gameActive) return;
             
             if (!isThief) {
-                if (familyVisitedToday.includes(currentCharacter.type)) {
-                    showAlert(`❌ SALAH BESAR! ${currentCharacter.name} sudah datang hari ini! Ini pasti PENJAHAT!`, 'error');
-                    endGame(false);
-                    return;
+                // BENAR: mengizinkan keluarga asli masuk
+                if (!familyVisitedToday.includes(currentCharacter.type)) {
+                    familyVisitedToday.push(currentCharacter.type);
+                    score += 20;
+                    familyTrust = Math.min(100, familyTrust + 5);
+                    showAlert(`✅ Orang berhasil masuk. Lanjutkan jaga!`, 'success');
                 }
-                
-                score += 30;
-                familyTrust = Math.min(100, familyTrust + 10);
-                showAlert(`✅ BENAR! Itu ${currentCharacter.name} asli. Dia belum datang hari ini! (+30 Poin)`, 'success');
             } else {
-                showAlert(`❌ SALAH BESAR! Itu PENJAHAT! Detail tidak lengkap!`, 'error');
-                endGame(false);
+                // SALAH: mengizinkan penjahat masuk
+                madeMistakeToday = true;
+                endGame("Kamu mengizinkan penjahat masuk ke rumah!");
                 return;
             }
             
@@ -1576,52 +1586,62 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
             if (!gameActive) return;
             
             if (isThief) {
-                score += 60;
-                thievesCaught++;
-                familyTrust = Math.min(100, familyTrust + 15);
-                showAlert(`🎯 HEBAT! Penjahat berhasil dibongkar! Detailnya tidak lengkap! (+60 Poin)`, 'success');
-                
-                if (thievesCaught % 3 === 0) {
-                    score += 30;
-                    showAlert(`🎉 Bonus! 3 penjahat tertangkap! Kamu semakin ahli! (+30 Bonus Poin)`, 'success');
-                }
+                // BENAR: menolak penjahat
+                score += 30;
+                familyTrust = Math.min(100, familyTrust + 8);
+                showAlert(`✅ Keputusan tepat! Orang itu pergi. Lanjutkan jaga!`, 'success');
             } else {
-                if (familyVisitedToday.includes(currentCharacter.type)) {
-                    showAlert(`❌ SALAH! Itu ${currentCharacter.name} asli! Tapi dia memang sudah datang hari ini!`, 'error');
-                } else {
-                    showAlert(`❌ SALAH! Itu ${currentCharacter.name} asli! Semua detail cocok dan dia belum datang hari ini!`, 'error');
-                }
-                
-                score -= 50;
-                familyTrust -= 30;
-                
-                if (familyTrust <= 0) {
-                    endGame(false);
-                    return;
-                }
+                // SALAH: menolak keluarga asli
+                madeMistakeToday = true;
+                endGame("Kamu menolak anggota keluarga sendiri!");
+                return;
             }
             
             updateStats();
             setTimeout(generateCharacter, 1500);
         }
 
-        function endGame(success) {
+        function showWeeklySuccess() {
             gameActive = false;
             
-            gameOverTitle.textContent = success ? "🎉 SELAMAT!" : "💀 GAME OVER";
-            gameOverTitle.style.color = success ? "#10b981" : "#ef4444";
+            weeklySuccessTitle.textContent = "🎉 SELAMAT!";
+            weeklySuccessMessage.textContent = `${playerName}, kamu berhasil bertahan 7 hari tanpa kesalahan! Kamu adalah penjaga terbaik di Aurora Falls!`;
+            weeklyScore.innerHTML = `
+                Total Skor: <span>${score}</span><br>
+                Minggu: <span>${week}</span><br>
+                Hari Sempurna: <span>${perfectDays}</span>
+            `;
             
-            if (success) {
-                gameOverMessage.textContent = `${playerName}, kamu ahli membedakan detail! Pencuri tidak bisa menipumu!`;
-            } else {
-                gameOverMessage.textContent = `${playerName}, pencuri berhasil menipumu! INGAT: setiap orang hanya datang SEKALI per hari!`;
-            }
+            weeklySuccessScreen.style.display = 'flex';
+        }
+
+        function continueToNextWeek() {
+            weeklySuccessScreen.style.display = 'none';
+            gameActive = true;
             
+            // Reset untuk minggu baru
+            day = 1;
+            familyVisitedToday = [];
+            visitedCount = 0;
+            madeMistakeToday = false;
+            gameTime = 14;
+            
+            updateStats();
+            updateTimeDisplay();
+            generateCharacter();
+            
+            showAlert(`🎊 SELAMAT DATANG DI MINGGU ${week}! Tantangan semakin sulit!`, "warning");
+        }
+
+        function endGame(reason) {
+            gameActive = false;
+            
+            gameOverMessage.textContent = `${playerName}, kamu kalah! ${reason}`;
             finalScore.innerHTML = `
                 Skor Akhir: <span>${score}</span><br>
-                Penjahat Tertangkap: <span>${thievesCaught}</span><br>
                 Hari Bertahan: <span>${day}</span><br>
-                Kepercayaan Keluarga: <span>${familyTrust}%</span>
+                Minggu: <span>${week}</span><br>
+                Hari Sempurna: <span>${perfectDays}</span>
             `;
             
             gameOverScreen.style.display = 'flex';
@@ -1629,6 +1649,7 @@ setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kal
 
         function goToMenu() {
             gameOverScreen.style.display = 'none';
+            weeklySuccessScreen.style.display = 'none';
             mainContainer.style.display = 'none';
             staticHeader.style.display = 'none';
             staticStats.style.display = 'none';
