@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+setiap hari sama tidak ada lebih satu orang contohnya hari 1 ibu sudah masuk kalau masih hari pertama jangan ada ibu lagi ketika semua anggota keluarga yang asli sudah masuk baru lanjut hari ke dua kalau kita membuat kesalahan kita akan kalah dan mengulang semuanya<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -235,7 +235,7 @@
         .main-container {
             position: relative;
             z-index: 1;
-            padding-top: 230px; /* Ditambah untuk header statis */
+            padding-top: 230px;
             min-height: 100vh;
             display: none;
         }
@@ -299,14 +299,7 @@
             background: rgba(15, 23, 42, 0.8);
             border-radius: 8px;
             border: 1px solid #334155;
-            /* HAPUS SEMUA ANIMASI DAN TRANSISI */
             transition: none !important;
-        }
-
-        .stat-card:hover {
-            /* TIDAK ADA PERUBAHAN SAAT HOVER */
-            border-color: #334155;
-            transform: none;
         }
 
         .stat-value {
@@ -339,6 +332,28 @@
             font-size: 0.9em;
         }
 
+        /* WARNING INDICATOR - UNTUK PENJAHAT */
+        .thief-warning {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            display: none;
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
         /* MAIN CONTENT - SCROLLABLE */
         .scrollable-content {
             max-width: 1200px;
@@ -356,6 +371,7 @@
             padding: 25px;
             border: 2px solid #3b82f6;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         .section-title {
@@ -391,6 +407,7 @@
             flex: 1;
             min-width: 280px;
             text-align: center;
+            position: relative;
         }
 
         .character-at-door {
@@ -432,6 +449,16 @@
             text-align: center;
         }
 
+        /* WARNA BERBEDA UNTUK PENJAHAT */
+        .character-name.thief {
+            color: #ef4444;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .character-name.family {
+            color: #10b981;
+        }
+
         .character-description {
             font-size: 1.1em;
             color: #cbd5e1;
@@ -455,14 +482,7 @@
             padding: 15px;
             border-radius: 10px;
             border: 1px solid #475569;
-            /* HAPUS ANIMASI */
             transition: none;
-        }
-
-        .detail-card:hover {
-            /* TIDAK ADA PERUBAHAN */
-            border-color: #475569;
-            transform: none;
         }
 
         .detail-header {
@@ -485,6 +505,34 @@
             font-size: 1em;
         }
 
+        /* HIGHLIGHT UNTUK DETAIL YANG TIDAK COCOK */
+        .detail-content.missing {
+            color: #ef4444;
+            font-weight: bold;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .detail-content.missing::before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .detail-content.correct {
+            color: #10b981;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .detail-content.correct::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
         /* CONTROLS */
         .controls-section {
             display: flex;
@@ -501,30 +549,12 @@
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            /* HAPUS ANIMASI HOVER */
             transition: all 0.2s;
             min-width: 250px;
             text-transform: uppercase;
             letter-spacing: 1px;
             position: relative;
             overflow: hidden;
-        }
-
-        .control-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            /* HAPUS ANIMASI */
-            transition: none;
-        }
-
-        .control-btn:hover::before {
-            /* TIDAK ADA ANIMASI */
-            left: -100%;
         }
 
         .allow-btn {
@@ -571,16 +601,8 @@
             border-radius: 12px;
             overflow: hidden;
             border: 2px solid #475569;
-            /* HAPUS ANIMASI */
             transition: none;
             cursor: pointer;
-        }
-
-        .family-member-card:hover {
-            /* TIDAK ADA ANIMASI HOVER */
-            border-color: #475569;
-            transform: none;
-            box-shadow: none;
         }
 
         .family-member-card.active {
@@ -615,6 +637,11 @@
         .member-traits li {
             margin: 6px 0;
             padding-left: 5px;
+        }
+
+        .critical-item {
+            color: #ef4444;
+            font-weight: bold;
         }
 
         /* ALERTS */
@@ -759,80 +786,34 @@
         }
 
         /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .scrollable-content {
-                padding: 20px 15px 30px;
-            }
-            
+        @media (max-width: 768px) {
             .static-stats {
-                grid-template-columns: repeat(2, 1fr);
-                top: 120px;
+                display: none;
             }
             
             .static-time {
-                top: 180px;
+                display: none;
             }
             
             .main-container {
-                padding-top: 250px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .game-title {
-                font-size: 1.6em;
+                padding-top: 150px;
             }
             
-            .story-title {
-                font-size: 2em;
+            .controls-section {
+                flex-direction: column;
             }
             
-            .story-text {
-                font-size: 1.1em;
-            }
-            
-            .static-stats {
-                grid-template-columns: repeat(2, 1fr);
-                top: 110px;
-            }
-            
-            .static-time {
-                position: static;
-                margin: 10px auto;
-                width: fit-content;
-                display: none; /* Sembunyikan di mobile */
+            .control-btn {
+                width: 100%;
             }
             
             .character-at-door {
                 width: 250px;
                 height: 250px;
             }
-            
-            .control-btn {
-                padding: 15px 30px;
-                min-width: 100%;
-                font-size: 1.1em;
-            }
-            
-            .main-container {
-                padding-top: 230px;
-            }
-            
-            .static-stats {
-                display: none; /* Sembunyikan stats di mobile */
-            }
-            
-            .game-footer {
-                padding: 15px;
-                font-size: 0.7em;
-            }
         }
 
         @media (max-width: 480px) {
-            .static-stats {
-                grid-template-columns: 1fr;
-            }
-            
             .character-at-door {
                 width: 220px;
                 height: 220px;
@@ -844,14 +825,6 @@
             
             .album-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .name-content {
-                padding: 30px;
-            }
-            
-            .story-content {
-                padding: 25px;
             }
         }
     </style>
@@ -867,11 +840,11 @@
                 <input type="text" 
                        class="name-input" 
                        id="playerNameInput" 
-                       placeholder="Contoh: Said Khazraji"
+                       placeholder="Contoh: Said"
                        maxlength="20"
                        autocomplete="off">
                 <div class="name-hint">
-                    Nama akan ditampilkan selama permainan dan di akhir permainan.
+                    Nama akan ditampilkan selama permainan
                 </div>
             </div>
             
@@ -887,29 +860,26 @@
             <h1 class="story-title">THIEF OR MY FAMILY</h1>
             
             <div class="story-text">
-                <p><strong id="storyPlayerName">Said Khazraji</strong>, kamu tinggal di <strong>Aurora Falls</strong>. Biasanya damai, tapi belakangan ini...</p>
+                <p><strong id="storyPlayerName">Said</strong>, kamu tinggal di <strong>Aurora Falls</strong>. Biasanya damai, tapi belakangan ini...</p>
                 
                 <div class="news-banner">
                     <div class="news-title">🚨 BERITA DARURAT 🚨</div>
-                    <p>Kasus pencurian meningkat 300% dalam sebulan terakhir! Sekelompok pencuri profesional 
-                    menyamar sebagai anggota keluarga untuk memasuki rumah korban.</p>
-                    <p>Modus operandi: Mereka mempelajari kebiasaan keluarga, lalu datang pada waktu yang tepat 
-                    dengan pakaian dan barang yang mirip. Tapi selalu ada <strong>satu detail yang terlupa!</strong></p>
+                    <p>Kasus pencurian meningkat 300% dalam sebulan terakhir! Pencuri profesional 
+                    menyamar sebagai anggota keluarga untuk memasuki rumah.</p>
+                    <p>Mereka mempelajari kebiasaan keluarga, datang dengan pakaian dan barang yang mirip. 
+                    Tapi selalu ada <strong>satu detail yang terlupa!</strong></p>
                 </div>
                 
-                <p>Kamu memutuskan untuk mengambil tindakan. Setelah melihat berita malam ini, 
-                kamu membuat <strong>Album Keluarga</strong> yang detail untuk mengenali anggota keluargamu sendiri.</p>
+                <p>Kamu membuat <strong>Album Keluarga</strong> untuk mengenali keluargamu sendiri.</p>
                 
-                <p>Setiap orang memiliki <strong>ciri khas, barang bawaan, dan waktu kedatangan</strong> yang spesifik. 
-                Kamu akan berjaga di dekat pintu dan memeriksa setiap orang yang datang.</p>
+                <p>Setiap orang memiliki <strong>ciri khas dan barang bawaan spesifik</strong>. 
+                Kamu harus berjaga di pintu dan memeriksa setiap orang.</p>
                 
-                <p><strong>Aturan main:</strong><br>
-                1. Bandingkan orang yang datang dengan detail di Album Keluarga<br>
-                2. Jika SEMUA detail cocok → Izinkan masuk<br>
-                3. Jika ada SATU saja yang tidak cocok → Itu PENJAHAT!<br>
-                4. Hati-hati! Pencuri sangat pintar meniru</p>
-                
-                <p>Keluargamu bergantung padamu. Kamu tidak boleh salah...</p>
+                <p><strong>PERATURAN PENTING:</strong><br>
+                1. Setiap anggota keluarga hanya muncul SATU KALI per hari<br>
+                2. Jika ibu sudah datang hari ini, ibu tidak akan datang lagi hari ini<br>
+                3. Bandingkan SEMUA detail dengan Album Keluarga<br>
+                4. Jika salah izinkan penjahat, kamu langsung kalah!</p>
             </div>
             
             <button class="start-game-btn" onclick="startGame()">🚪 BERJAGA DI PINTU</button>
@@ -960,11 +930,12 @@
         <div class="scrollable-content">
             <!-- CHARACTER INSPECTION SECTION -->
             <section class="character-section">
+                <div class="thief-warning" id="thiefWarning">🚨 KEMUNGKINAN PENJAHAT</div>
+                
                 <h2 class="section-title">👤 SIAPA YANG MENGETUK PINTU?</h2>
                 
                 <div class="warning-note">
-                    ⚠️ PERHATIAN: Pencuri di Aurora Falls sangat pintar! 
-                    Bandingkan dengan Album Keluarga di bawah!
+                    ⚠️ ATURAN: SATU ORANG SATU HARI! Jika ibu sudah datang hari ini, tidak akan ada ibu lagi hari ini!
                 </div>
                 
                 <div class="character-display">
@@ -979,7 +950,7 @@
                     <div class="character-info">
                         <div class="character-description" id="charDesc">
                             Seseorang sedang mengetuk pintu depan rumahmu di Aurora Falls. 
-                            <strong>Waspada terhadap pencuri penyamar!</strong>
+                            <strong>Nama mungkin sama, tapi periksa detailnya!</strong>
                         </div>
                         
                         <div class="details-grid">
@@ -1032,7 +1003,7 @@
                 </div>
                 
                 <div style="text-align: center; margin-top: 25px; color: #94a3b8; font-size: 0.85em;">
-                    <strong>Scroll ke bawah untuk melihat Album Keluarga sebagai referensi</strong>
+                    <strong>INGAT: SATU ORANG SATU HARI! Scroll ke bawah untuk bandingkan detail!</strong>
                 </div>
             </section>
 
@@ -1040,7 +1011,7 @@
             <section class="album-section">
                 <h2 class="section-title">📖 ALBUM KELUARGA KHAS AURORA FALLS</h2>
                 <p style="text-align: center; color: #10b981; margin-bottom: 25px; font-size: 0.95em;">
-                    <strong>Dibuat untuk melindungi keluarga dari pencuri</strong>
+                    <strong>ATURAN: SATU ORANG SATU HARI! Semua detail harus cocok!</strong>
                 </p>
                 
                 <div class="album-grid">
@@ -1051,10 +1022,10 @@
                             <h3 class="member-name">AYAH - Bapak</h3>
                             <ul class="member-traits">
                                 <li><strong>Pakaian:</strong> Kemeja biru, dasi hitam, jam tangan silver</li>
-                                <li><strong>Bawaan WAJIB:</strong> Tas kerja hitam + kunci mobil + laptop bag</li>
-                                <li><strong>Waktu normal:</strong> 18:00 - 19:00 (pulang kerja)</li>
-                                <li><strong>Ciri khusus:</strong> Kumis rapi, cincin pernikahan, tas ada stiker perusahaan</li>
-                                <li><strong>Catatan:</strong> Pulang dari kantor di pusat kota Aurora Falls</li>
+                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tas kerja hitam + kunci mobil + laptop bag</li>
+                                <li><strong>Waktu normal:</strong> 18:00 - 19:00</li>
+                                <li class="critical-item"><strong>Ciri khusus:</strong> Kumis, cincin pernikahan, stiker perusahaan di tas</li>
+                                <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
                     </div>
@@ -1065,11 +1036,11 @@
                         <div class="member-info">
                             <h3 class="member-name">IBU - Ibu</h3>
                             <ul class="member-traits">
-                                <li><strong>Pakaian:</strong> Dress merah, kalung mutiara, sepatu flat hitam</li>
-                                <li><strong>Bawaan WAJIB:</strong> Tas belanja besar + dompet coklat + daftar belanja</li>
-                                <li><strong>Waktu normal:</strong> 10:00-12:00 atau 15:00-17:00 (pulang belanja)</li>
-                                <li><strong>Ciri khusus:</strong> Gelang emas, rambut diikat, bawa struk belanja</li>
-                                <li><strong>Catatan:</strong> Belanja di Pasar Aurora setiap Selasa & Kamis</li>
+                                <li class="critical-item"><strong>Pakaian:</strong> Dress merah, kalung mutiara, sepatu flat hitam</li>
+                                <li><strong>Bawaan:</strong> Tas belanja besar + dompet coklat + daftar belanja</li>
+                                <li><strong>Waktu normal:</strong> 10:00-12:00 atau 15:00-17:00</li>
+                                <li class="critical-item"><strong>Ciri khusus:</strong> Gelang emas, rambut diikat, struk belanja</li>
+                                <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
                     </div>
@@ -1081,10 +1052,10 @@
                             <h3 class="member-name">KAKAK - Sarah</h3>
                             <ul class="member-traits">
                                 <li><strong>Pakaian:</strong> Jaket hoodie abu-abu, celana jeans robek, sneakers putih</li>
-                                <li><strong>Bawaan WAJIB:</strong> Tas ransel biru + skateboard + headphone</li>
-                                <li><strong>Waktu normal:</strong> 13:00 - 16:00 (pulang kuliah)</li>
-                                <li><strong>Ciri khusus:</strong> Rambut biru, tattoo di pergelangan, piercing hidung</li>
-                                <li><strong>Catatan:</strong> Mahasiswa Universitas Aurora Falls, jurusan Desain</li>
+                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tas ransel biru + skateboard + headphone</li>
+                                <li><strong>Waktu normal:</strong> 13:00 - 16:00</li>
+                                <li class="critical-item"><strong>Ciri khusus:</strong> Rambut biru, tattoo 'Aurora', piercing hidung</li>
+                                <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
                     </div>
@@ -1096,10 +1067,10 @@
                             <h3 class="member-name">ADIK - Rizky</h3>
                             <ul class="member-traits">
                                 <li><strong>Pakaian:</strong> Seragam sekolah putih-biru, dasi merah, sepatu hitam</li>
-                                <li><strong>Bawaan WAJIB:</strong> Tas sekolah merah + buku gambar A3 + botol minum</li>
-                                <li><strong>Waktu normal:</strong> 14:00 - 15:00 (pulang sekolah)</li>
+                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tas sekolah merah + buku gambar A3 + botol minum</li>
+                                <li><strong>Waktu normal:</strong> 14:00 - 15:00</li>
                                 <li><strong>Ciri khusus:</strong> Kacamata, bekas luka di dagu, ikat pinggang biru</li>
-                                <li><strong>Catatan:</strong> Siswa SMP Aurora Falls, suka menggambar manga</li>
+                                <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
                     </div>
@@ -1110,11 +1081,11 @@
                         <div class="member-info">
                             <h3 class="member-name">NENEK - Mbah Siti</h3>
                             <ul class="member-traits">
-                                <li><strong>Pakaian:</strong> Baju batik bunga, syal coklat, sepatu kulit</li>
-                                <li><strong>Bawaan WAJIB:</strong> Tongkat kayu + kantong kue nastar + tas ungu</li>
-                                <li><strong>Waktu normal:</strong> 09:00 - 17:00 (silaturahmi)</li>
+                                <li class="critical-item"><strong>Pakaian:</strong> Baju batik bunga, syal coklat, sepatu kulit</li>
+                                <li class="critical-item"><strong>BAWAAN WAJIB:</strong> Tongkat kayu + kantong kue nastar + tas ungu</li>
+                                <li><strong>Waktu normal:</strong> 09:00 - 17:00</li>
                                 <li><strong>Ciri khusus:</strong> Rambut putih dikuncir, kacamata baca, sering batuk</li>
-                                <li><strong>Catatan:</strong> Tinggal di Perumahan Taman Aurora, sering bawa kue buatan sendiri</li>
+                                <li><strong>Catatan:</strong> Hanya datang SEKALI per hari!</li>
                             </ul>
                         </div>
                     </div>
@@ -1125,9 +1096,6 @@
             <div class="game-footer">
                 <p>Game "Thief or My Family" - Sebuah cerita tentang melindungi keluarga di kota Aurora Falls</p>
                 <p class="creator-credit">Dibuat oleh: <span id="footerPlayerName">Player</span></p>
-                <p style="margin-top: 10px; font-size: 0.75em; color: #64748b;">
-                    Cerita fiksi yang terinspirasi dari keresahan akan keamanan keluarga di era modern
-                </p>
             </div>
         </div>
     </div>
@@ -1163,6 +1131,141 @@
         let isThief = false;
         let gameActive = true;
         let gameTime = 14;
+        let familyVisitedToday = []; // Daftar keluarga yang sudah datang hari ini
+        let familyOrderForToday = []; // Urutan keluarga yang akan datang hari ini
+        let dailyFamilyCount = 0; // Jumlah keluarga yang akan datang hari ini
+        let visitedCount = 0; // Sudah berapa yang datang
+
+        // ====================
+        // GAME DATA
+        // ====================
+        const familyDatabase = {
+            father: {
+                name: "AYAH",
+                images: {
+                    real: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Pulang dari kantor di pusat kota Aurora Falls",
+                time: "18:00 - 19:00",
+                criticalItems: ["laptop bag", "stiker perusahaan"],
+                details: {
+                    real: {
+                        wearing: "Kemeja biru, dasi hitam, jam tangan silver",
+                        carrying: "Tas kerja hitam, kunci mobil, laptop bag",
+                        reason: "Pulang kerja dari kantor di pusat kota",
+                        special: "Ada kumis rapi, pakai cincin pernikahan, tas ada stiker perusahaan Aurora Corp"
+                    },
+                    thief: {
+                        wearing: "Kemeja biru, dasi hitam, jam tangan silver",
+                        carrying: "Tas kerja hitam, kunci mobil",
+                        reason: "Pulang kerja",
+                        special: "Ada kumis rapi, pakai cincin pernikahan",
+                        missing: "Tidak membawa laptop bag dan tas tanpa stiker perusahaan"
+                    }
+                }
+            },
+            mother: {
+                name: "IBU",
+                images: {
+                    real: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Baru pulang belanja dari Pasar Aurora",
+                time: "10:00-12:00 atau 15:00-17:00",
+                criticalItems: ["kalung mutiara", "gelang emas"],
+                details: {
+                    real: {
+                        wearing: "Dress merah, kalung mutiara, sepatu flat hitam",
+                        carrying: "Tas belanja besar, dompet panjang coklat, daftar belanja",
+                        reason: "Baru belanja kebutuhan mingguan di Pasar Aurora",
+                        special: "Gelang emas, rambut diikat rapi, bawa struk belanja pasar"
+                    },
+                    thief: {
+                        wearing: "Dress merah, sepatu flat hitam",
+                        carrying: "Tas belanja besar, dompet panjang coklat",
+                        reason: "Baru belanja",
+                        special: "Rambut diikat rapi",
+                        missing: "Tidak memakai kalung mutiara dan gelang emas"
+                    }
+                }
+            },
+            sister: {
+                name: "KAKAK",
+                images: {
+                    real: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Pulang dari kampus Universitas Aurora Falls",
+                time: "13:00 - 16:00",
+                criticalItems: ["skateboard", "tattoo"],
+                details: {
+                    real: {
+                        wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
+                        carrying: "Tas ransel biru, skateboard, headphone",
+                        reason: "Pulang kuliah dari Universitas Aurora Falls",
+                        special: "Rambut biru pastel, tattoo 'Aurora' di pergelangan kanan, piercing hidung"
+                    },
+                    thief: {
+                        wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
+                        carrying: "Tas ransel biru, headphone",
+                        reason: "Pulang kuliah",
+                        special: "Rambut biru pastel, piercing hidung",
+                        missing: "Tidak membawa skateboard dan tidak ada tattoo"
+                    }
+                }
+            },
+            brother: {
+                name: "ADIK",
+                images: {
+                    real: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop&crop=face",
+                    thief: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop&crop=face"
+                },
+                desc: "Pulang dari SMP Aurora Falls",
+                time: "14:00 - 15:00",
+                criticalItems: ["buku gambar"],
+                details: {
+                    real: {
+                        wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
+                        carrying: "Tas sekolah merah, buku gambar A3, botol minum",
+                        reason: "Pulang sekolah dari SMP Aurora Falls",
+                        special: "Pakai kacamata, bekas luka di dagu (jatuh saat kecil), ikat pinggang biru"
+                    },
+                    thief: {
+                        wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
+                        carrying: "Tas sekolah merah, botol minum",
+                        reason: "Pulang sekolah",
+                        special: "Pakai kacamata, bekas luka di dagu, ikat pinggang biru",
+                        missing: "Tidak membawa buku gambar A3"
+                    }
+                }
+            },
+            grandma: {
+                name: "NENEK",
+                images: {
+                    real: "https://i.pravatar.cc/300?img=69",
+                    thief: "https://i.pravatar.cc/300?img=69"
+                },
+                desc: "Berkunjung dari Perumahan Taman Aurora",
+                time: "09:00 - 17:00",
+                criticalItems: ["syal coklat", "kantong kue"],
+                details: {
+                    real: {
+                        wearing: "Baju batik bunga, syal coklat, sepatu kulit",
+                        carrying: "Tongkat kayu, kantong kue nastar, tas kecil ungu",
+                        reason: "Silaturahmi dari Perumahan Taman Aurora",
+                        special: "Rambut putih dikuncir, kacamata baca, sering batuk ringan (alergi)"
+                    },
+                    thief: {
+                        wearing: "Baju batik bunga, sepatu kulit",
+                        carrying: "Tongkat kayu, tas kecil ungu",
+                        reason: "Silaturahmi",
+                        special: "Rambut putih dikuncir, kacamata baca",
+                        missing: "Tidak memakai syal coklat dan tidak membawa kue"
+                    }
+                }
+            }
+        };
 
         // ====================
         // DOM ELEMENTS
@@ -1178,6 +1281,7 @@
         const storyPlayerName = document.getElementById('storyPlayerName');
         const playerNameDisplay = document.getElementById('playerNameDisplay');
         const footerPlayerName = document.getElementById('footerPlayerName');
+        const thiefWarning = document.getElementById('thiefWarning');
 
         const charNameEl = document.getElementById('charName');
         const charImageEl = document.getElementById('charImage');
@@ -1203,30 +1307,25 @@
         // NAME INPUT HANDLING
         // ====================
 
-        // Enable button when name is entered
         playerNameInput.addEventListener('input', function() {
             const name = this.value.trim();
             startStoryBtn.disabled = name.length < 2;
         });
 
-        // Enter key to start story
         playerNameInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && !startStoryBtn.disabled) {
                 startStory();
             }
         });
 
-        // Start story button
         startStoryBtn.addEventListener('click', startStory);
 
         function startStory() {
             playerName = playerNameInput.value.trim();
             if (playerName.length < 2) return;
             
-            // Update story with player name
             storyPlayerName.textContent = playerName;
             
-            // Hide name modal, show story modal
             nameModal.style.display = 'none';
             storyModal.style.display = 'flex';
         }
@@ -1236,22 +1335,17 @@
         // ====================
 
         function startGame() {
-            // Hide story modal
             storyModal.style.display = 'none';
             
-            // Update player name displays
             playerNameDisplay.textContent = `Pemain: ${playerName}`;
             footerPlayerName.textContent = playerName;
             
-            // Show game UI
             mainContainer.style.display = 'block';
             staticHeader.style.display = 'block';
             staticStats.style.display = 'grid';
             staticTime.style.display = 'block';
             
-            // Initialize game
             resetGame();
-            initGame();
         }
 
         function resetGame() {
@@ -1261,24 +1355,34 @@
             thievesCaught = 0;
             gameTime = 14;
             gameActive = true;
+            familyVisitedToday = [];
+            familyOrderForToday = [];
+            visitedCount = 0;
+            dailyFamilyCount = Math.min(day + 1, 5);
             
+            setupNewDay();
             updateStats();
             generateCharacter();
             updateTimeDisplay();
             showMemberInfo('father');
             
             gameOverScreen.style.display = 'none';
-            showAlert("🚨 Anda sekarang berjaga di pintu! Waspada terhadap pencuri di Aurora Falls!", "warning");
+            showAlert("🚨 Anda sekarang berjaga di pintu! ATURAN: SATU ORANG SATU HARI!", "warning");
         }
 
-        function initGame() {
-            updateStats();
-            generateCharacter();
-            updateTimeDisplay();
-            showMemberInfo('father');
+        function setupNewDay() {
+            familyVisitedToday = [];
+            visitedCount = 0;
             
-            gameOverScreen.style.display = 'none';
-            showAlert("🚨 Anda sekarang berjaga di pintu! Waspada terhadap pencuri di Aurora Falls!", "warning");
+            const allMembers = ['father', 'mother', 'sister', 'brother', 'grandma'];
+            
+            dailyFamilyCount = Math.min(day + 2, 5);
+            
+            familyOrderForToday = [...allMembers]
+                .sort(() => Math.random() - 0.5)
+                .slice(0, dailyFamilyCount);
+            
+            showAlert(`📅 HARI ${day}: Akan ada ${dailyFamilyCount} orang datang hari ini. Setiap orang hanya datang SEKALI!`, "warning");
         }
 
         function updateStats() {
@@ -1288,7 +1392,6 @@
             thievesCaughtEl.textContent = thievesCaught;
             currentDayEl.textContent = `Hari ${day} - Aurora Falls`;
             
-            // Update header color based on trust (STATIS - tanpa animasi)
             if (familyTrust < 30) {
                 staticHeader.style.borderBottomColor = '#ef4444';
             } else if (familyTrust < 60) {
@@ -1301,157 +1404,57 @@
         function updateTimeDisplay() {
             currentTimeEl.textContent = gameTime + ':00';
             
-            // Update background based on time (STATIS)
             const bg = document.querySelector('.static-house-bg');
             const windows = document.querySelectorAll('.window-light');
             
             if (gameTime >= 18 || gameTime <= 6) {
-                // Night - waktu rawan pencurian
                 bg.style.background = 'linear-gradient(to bottom, #0f172a, #1e293b, #334155)';
                 windows.forEach(w => {
                     w.style.opacity = '1';
                     w.style.boxShadow = '0 0 30px #fbbf24';
                 });
             } else if (gameTime >= 6 && gameTime < 12) {
-                // Morning
                 bg.style.background = 'linear-gradient(to bottom, #4f46e5, #6366f1, #818cf8)';
                 windows.forEach(w => w.style.opacity = '0.5');
             } else {
-                // Day
                 bg.style.background = 'linear-gradient(to bottom, #0ea5e9, #38bdf8, #7dd3fc)';
                 windows.forEach(w => w.style.opacity = '0.3');
             }
         }
 
-        // GAME DATA (sama seperti sebelumnya)
-        const familyDatabase = {
-            father: {
-                name: "BAPAK",
-                images: {
-                    real: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face",
-                    thief: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face"
-                },
-                desc: "Pulang dari kantor di pusat kota Aurora Falls",
-                time: "18:00 - 19:00",
-                details: {
-                    real: {
-                        wearing: "Kemeja biru, dasi hitam, jam tangan silver",
-                        carrying: "Tas kerja hitam, kunci mobil, laptop bag",
-                        reason: "Pulang kerja dari kantor di pusat kota",
-                        special: "Ada kumis rapi, pakai cincin pernikahan, tas ada stiker perusahaan Aurora Corp"
-                    },
-                    thief: {
-                        wearing: "Kemeja biru, dasi hitam, jam tangan silver",
-                        carrying: "Tas kerja hitam, kunci mobil",
-                        reason: "Pulang kerja",
-                        special: "Ada kumis rapi, pakai cincin pernikahan"
-                    }
-                }
-            },
-            mother: {
-                name: "IBU",
-                images: {
-                    real: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=300&h=300&fit=crop&crop=face",
-                    thief: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=300&h=300&fit=crop&crop=face"
-                },
-                desc: "Baru pulang belanja dari Pasar Aurora",
-                time: "10:00-12:00 atau 15:00-17:00",
-                details: {
-                    real: {
-                        wearing: "Dress merah, kalung mutiara, sepatu flat hitam",
-                        carrying: "Tas belanja besar, dompet panjang coklat, daftar belanja",
-                        reason: "Baru belanja kebutuhan mingguan di Pasar Aurora",
-                        special: "Gelang emas, rambut diikat rapi, bawa struk belanja pasar"
-                    },
-                    thief: {
-                        wearing: "Dress merah, sepatu flat hitam",
-                        carrying: "Tas belanja besar, dompet panjang coklat",
-                        reason: "Baru belanja",
-                        special: "Rambut diikat rapi"
-                    }
-                }
-            },
-            sister: {
-                name: "SARAH",
-                images: {
-                    real: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face",
-                    thief: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face"
-                },
-                desc: "Pulang dari kampus Universitas Aurora Falls",
-                time: "13:00 - 16:00",
-                details: {
-                    real: {
-                        wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
-                        carrying: "Tas ransel biru, skateboard, headphone",
-                        reason: "Pulang kuliah dari Universitas Aurora Falls",
-                        special: "Rambut biru pastel, tattoo 'Aurora' di pergelangan kanan, piercing hidung"
-                    },
-                    thief: {
-                        wearing: "Jaket hoodie abu-abu, celana jeans robek, sneakers putih",
-                        carrying: "Tas ransel biru, headphone",
-                        reason: "Pulang kuliah",
-                        special: "Rambut biru pastel, piercing hidung"
-                    }
-                }
-            },
-            brother: {
-                name: "RIZKY",
-                images: {
-                    real: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop&crop=face",
-                    thief: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop&crop=face"
-                },
-                desc: "Pulang dari SMP Aurora Falls",
-                time: "14:00 - 15:00",
-                details: {
-                    real: {
-                        wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
-                        carrying: "Tas sekolah merah, buku gambar A3, botol minum",
-                        reason: "Pulang sekolah dari SMP Aurora Falls",
-                        special: "Pakai kacamata, bekas luka di dagu (jatuh saat kecil), ikat pinggang biru"
-                    },
-                    thief: {
-                        wearing: "Seragam sekolah putih-biru, dasi merah, sepatu hitam",
-                        carrying: "Tas sekolah merah, botol minum",
-                        reason: "Pulang sekolah",
-                        special: "Pakai kacamata, bekas luka di dagu, ikat pinggang biru"
-                    }
-                }
-            },
-            grandma: {
-                name: "MBAH SITI",
-                images: {
-                    real: "https://i.pravatar.cc/300?img=69",
-                    thief: "https://i.pravatar.cc/300?img=69"
-                },
-                desc: "Berkunjung dari Perumahan Taman Aurora",
-                time: "09:00 - 17:00",
-                details: {
-                    real: {
-                        wearing: "Baju batik bunga, syal coklat, sepatu kulit",
-                        carrying: "Tongkat kayu, kantong kue nastar, tas kecil ungu",
-                        reason: "Silaturahmi dari Perumahan Taman Aurora",
-                        special: "Rambut putih dikuncir, kacamata baca, sering batuk ringan (alergi)"
-                    },
-                    thief: {
-                        wearing: "Baju batik bunga, sepatu kulit",
-                        carrying: "Tongkat kayu, tas kecil ungu",
-                        reason: "Silaturahmi",
-                        special: "Rambut putih dikuncir, kacamata baca"
-                    }
-                }
-            }
-        };
-
         function generateCharacter() {
             if (!gameActive) return;
             
-            const characters = ['father', 'mother', 'sister', 'brother', 'grandma'];
-            const charType = characters[Math.floor(Math.random() * characters.length)];
+            if (visitedCount >= dailyFamilyCount) {
+                day++;
+                setupNewDay();
+                updateStats();
+                gameTime = 14;
+                updateTimeDisplay();
+            }
             
-            isThief = Math.random() < 0.45;
+            let charType;
+            
+            if (visitedCount < familyOrderForToday.length) {
+                charType = familyOrderForToday[visitedCount];
+            } else {
+                const remainingTypes = ['father', 'mother', 'sister', 'brother', 'grandma']
+                    .filter(type => !familyVisitedToday.includes(type));
+                charType = remainingTypes[Math.floor(Math.random() * remainingTypes.length)];
+            }
+            
+            isThief = Math.random() < 0.5;
+            
+            if (!isThief) {
+                familyVisitedToday.push(charType);
+            }
+            
+            visitedCount++;
             const charData = familyDatabase[charType];
             
-            charNameEl.textContent = isThief ? `??? (${charData.name})` : charData.name;
+            charNameEl.textContent = charData.name;
+            charNameEl.className = isThief ? 'character-name thief' : 'character-name family';
+            
             charImageEl.src = charData.images.real;
             
             const descriptions = [
@@ -1464,11 +1467,39 @@
             
             const details = isThief ? charData.details.thief : charData.details.real;
             
+            detailWearingEl.className = 'detail-content';
+            detailCarryingEl.className = 'detail-content';
+            detailReasonEl.className = 'detail-content';
+            detailTimeEl.className = 'detail-content';
+            detailSpecialEl.className = 'detail-content';
+            
             detailWearingEl.textContent = details.wearing;
             detailCarryingEl.textContent = details.carrying;
             detailReasonEl.textContent = details.reason;
             detailTimeEl.textContent = `Datang pada pukul: ${gameTime}:00 | Waktu normal: ${charData.time}`;
-            detailSpecialEl.textContent = details.special;
+            
+            if (isThief) {
+                thiefWarning.style.display = 'block';
+                detailSpecialEl.innerHTML = `<span class="detail-content missing">${details.missing}</span>`;
+                
+                const isWrongTime = !charData.time.includes(gameTime + ':') && 
+                                    !(charData.time.includes('-') && 
+                                      gameTime >= parseInt(charData.time.split('-')[0]) && 
+                                      gameTime <= parseInt(charData.time.split('-')[1].split(':')[0]));
+                
+                if (isWrongTime) {
+                    detailTimeEl.innerHTML = `<span class="detail-content missing">Datang pada pukul: ${gameTime}:00 | Waktu normal: ${charData.time} (TIDAK SESUAI!)</span>`;
+                }
+                
+                showAlert("🚨 PERHATIAN: Ini mungkin penjahat! Cek apakah ini orang kedua dengan nama yang sama hari ini!", "warning");
+            } else {
+                thiefWarning.style.display = 'none';
+                detailSpecialEl.textContent = details.special;
+                
+                if (familyVisitedToday.filter(type => type === charType).length > 1) {
+                    detailSpecialEl.innerHTML = `<span class="detail-content missing">PERINGATAN: Orang ini sudah datang hari ini! Mungkin penjahat!</span>`;
+                }
+            }
             
             currentCharacter = {
                 type: charType,
@@ -1492,19 +1523,6 @@
             
             if (gameTime > 22) {
                 gameTime = 8 + Math.floor(Math.random() * 4);
-                day++;
-                
-                const news = [
-                    "Berita: Kasus pencurian meningkat di wilayah Aurora Falls!",
-                    "Polisi Aurora Falls mengimbau warga waspada!",
-                    "Geng pencuri masih berkeliaran di kota!",
-                    "Malam hari adalah waktu favorit pencuri!"
-                ];
-                showAlert(`🌅 Hari ${day} - ${news[Math.floor(Math.random() * news.length)]}`, "warning");
-                
-                if (day % 2 === 0) {
-                    showAlert("⚠️ PERINGATAN: Pencuri semakin pintar menyamar!", "warning");
-                }
             }
             
             updateTimeDisplay();
@@ -1518,7 +1536,7 @@
             });
             event.currentTarget.classList.add('active');
             
-            showAlert(`Melihat detail ${data.name}. Bandingkan dengan orang di atas!`, "warning");
+            showAlert(`Melihat detail ${data.name}. INGAT: Orang ini hanya datang SEKALI per hari!`, "warning");
         }
 
         function showAlert(message, type) {
@@ -1528,25 +1546,26 @@
             
             setTimeout(() => {
                 alertBox.style.display = 'none';
-            }, 3000);
+            }, 4000);
         }
 
         function allowPerson() {
             if (!gameActive) return;
             
             if (!isThief) {
-                score += 30;
-                familyTrust = Math.min(100, familyTrust + 15);
-                showAlert(`✅ BENAR! Itu ${currentCharacter.name} asli. Keluarga aman. (+30 Poin)`, 'success');
-            } else {
-                score -= 70;
-                familyTrust -= 40;
-                showAlert(`❌ SALAH BESAR! Itu PENJAHAT! Barang-barang dicuri! (-70 Poin)`, 'error');
-                
-                if (familyTrust <= 0) {
+                if (familyVisitedToday.includes(currentCharacter.type)) {
+                    showAlert(`❌ SALAH BESAR! ${currentCharacter.name} sudah datang hari ini! Ini pasti PENJAHAT!`, 'error');
                     endGame(false);
                     return;
                 }
+                
+                score += 30;
+                familyTrust = Math.min(100, familyTrust + 10);
+                showAlert(`✅ BENAR! Itu ${currentCharacter.name} asli. Dia belum datang hari ini! (+30 Poin)`, 'success');
+            } else {
+                showAlert(`❌ SALAH BESAR! Itu PENJAHAT! Detail tidak lengkap!`, 'error');
+                endGame(false);
+                return;
             }
             
             updateStats();
@@ -1559,17 +1578,22 @@
             if (isThief) {
                 score += 60;
                 thievesCaught++;
-                familyTrust += 15;
-                showAlert(`🎯 LUAR BIASA! Penjahat berhasil ditangkap! Polisi Aurora Falls datang. (+60 Poin)`, 'success');
+                familyTrust = Math.min(100, familyTrust + 15);
+                showAlert(`🎯 HEBAT! Penjahat berhasil dibongkar! Detailnya tidak lengkap! (+60 Poin)`, 'success');
                 
                 if (thievesCaught % 3 === 0) {
                     score += 30;
-                    showAlert(`🎉 Bonus! 3 penjahat tertangkap! Warga Aurora Falls lebih aman. (+30 Bonus Poin)`, 'success');
+                    showAlert(`🎉 Bonus! 3 penjahat tertangkap! Kamu semakin ahli! (+30 Bonus Poin)`, 'success');
                 }
             } else {
+                if (familyVisitedToday.includes(currentCharacter.type)) {
+                    showAlert(`❌ SALAH! Itu ${currentCharacter.name} asli! Tapi dia memang sudah datang hari ini!`, 'error');
+                } else {
+                    showAlert(`❌ SALAH! Itu ${currentCharacter.name} asli! Semua detail cocok dan dia belum datang hari ini!`, 'error');
+                }
+                
                 score -= 50;
                 familyTrust -= 30;
-                showAlert(`😢 SALAH! Itu ${currentCharacter.name} asli! Mereka kecewa padamu. (-50 Poin)`, 'error');
                 
                 if (familyTrust <= 0) {
                     endGame(false);
@@ -1588,9 +1612,9 @@
             gameOverTitle.style.color = success ? "#10b981" : "#ef4444";
             
             if (success) {
-                gameOverMessage.textContent = `${playerName}, kamu berhasil melindungi keluargamu! Pencuri tidak berhasil masuk ke rumahmu.`;
+                gameOverMessage.textContent = `${playerName}, kamu ahli membedakan detail! Pencuri tidak bisa menipumu!`;
             } else {
-                gameOverMessage.textContent = `${playerName}, pencuri berhasil masuk dan menjarah rumah! Keluargamu tidak aman lagi di Aurora Falls.`;
+                gameOverMessage.textContent = `${playerName}, pencuri berhasil menipumu! INGAT: setiap orang hanya datang SEKALI per hari!`;
             }
             
             finalScore.innerHTML = `
@@ -1604,23 +1628,19 @@
         }
 
         function goToMenu() {
-            // Reset semua dan kembali ke awal
             gameOverScreen.style.display = 'none';
             mainContainer.style.display = 'none';
             staticHeader.style.display = 'none';
             staticStats.style.display = 'none';
             staticTime.style.display = 'none';
             
-            // Reset input name
             playerNameInput.value = '';
             startStoryBtn.disabled = true;
             
-            // Show name modal
             nameModal.style.display = 'flex';
         }
 
         function playAgain() {
-            // Reset game dengan nama yang sama
             gameOverScreen.style.display = 'none';
             resetGame();
         }
@@ -1642,7 +1662,6 @@
 
         // Initialize
         window.onload = function() {
-            // Show name modal first
             nameModal.style.display = 'flex';
         };
     </script>
